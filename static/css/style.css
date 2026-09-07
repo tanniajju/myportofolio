@@ -6,9 +6,9 @@
 
 :root {
     --ink: #1c1917;
-    --paper: #faf6f0;
-    --accent: #d95d39;
-    --accent-dark: #a8442a;
+    --paper: #fbecec;
+    --accent: #85182a;
+    --accent-dark: #800000;
     --line: #e3d9c9;
     --text-muted: #6b6459;
     --radius: 4px;
@@ -131,14 +131,14 @@ h1, .brand{
     font-weight: 600;
     text-decoration: none;
     color: var(--paper);
-    background-color: var(--ink);
+    background-color: var(--accent);
     border-radius: var(--radius);
     padding: 0.5rem 1.1rem;
     transition: background-color 0.2s ease;
 }
 
 .social-link:hover {
-    background-color: var(--accent);
+    background-color: var(--accent-dark);
 }
 
 .hero-photo {
@@ -215,6 +215,7 @@ h1, .brand{
 .experience-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 20px rgba(128, 0, 0, 0.08); 
+    background-color: #fff0f0;
     border-color: #f5d6d6;
 }
 
