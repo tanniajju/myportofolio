@@ -203,15 +203,42 @@ h1, .brand{
     transition: transform 0.3s ease;
 }
 
-.experience-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 20px rgba(128, 0, 0, 0.08); 
-    background-color: #fff0f0;
-    border-color: #f5d6d6;
+@media (hover: hover) {
+    .experience-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(128, 0, 0, 0.08); 
+        border-color: #f5d6d6;
+        background-color: #fff0f0; 
+    }
+    .experience-card:hover::before {
+        transform: scaleX(1);
+    }
+    .experience-card:hover .experience-card-detail {
+        grid-template-rows: 1fr;
+    }
+    .experience-card:hover .experience-card-detail-inner {
+        padding-top: 0.75rem;
+        margin-top: 0.25rem;
+        border-top: 1px dashed var(--line);
+    }
 }
 
-.experience-card:hover::before {
+.experience-card.active {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(128, 0, 0, 0.08); 
+    border-color: #f5d6d6;
+    background-color: #fff0f0;
+}
+.experience-card.active::before {
     transform: scaleX(1);
+}
+.experience-card.active .experience-card-detail {
+    grid-template-rows: 1fr;
+}
+.experience-card.active .experience-card-detail-inner {
+    padding-top: 0.75rem;
+    margin-top: 0.25rem;
+    border-top: 1px dashed var(--line);
 }
 
 .experience-card-detail {
@@ -223,16 +250,6 @@ h1, .brand{
 .experience-card-detail-inner {
     overflow: hidden;
     min-height: 0;
-}
-
-.experience-card:hover .experience-card-detail {
-    grid-template-rows: 1fr;
-}
-
-.experience-card:hover .experience-card-detail-inner {
-    padding-top: 0.75rem;
-    margin-top: 0.25rem;
-    border-top: 1px dashed var(--line);
 }
 
 .experience-image {
@@ -283,7 +300,21 @@ h1, .brand{
 @media (max-width: 600px) {
     .experience-grid {
         grid-template-columns: 1fr;
+        gap: 1.25 rem;
     }
+
+    .experience-card {
+        padding: 1.5rem;
+    }
+
+    .experience-image {
+        margin-left: 0;
+    }
+
+    .experience h1 {
+        padding-left: 1.5rem;
+    }
+
     .hero-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
