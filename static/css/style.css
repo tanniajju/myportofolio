@@ -143,10 +143,23 @@ h1, .brand{
     background-color: var(--accent-dark);
 }
 
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .hero-photo {
     grid-area: photo;
     align-self: center;
     position: relative;
+}
+
+.hero-photo:hover {
+    animation: rotate 4s linear infinite;
 }
 
 .avatar {
