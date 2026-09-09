@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tania Ju - Portfolio</title>
+    <title>{{ name }} - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -12,10 +12,10 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="#profile" class="brand">Tania</a>
+            <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
             <nav>
-                <a href="#profile">Profile</a>
-                <a href="#experience">Experience</a>
+                <a href="{% url 'main:show_main' %}">Profile</a>
+                <a href="{% url 'main:show_experience' %}">Experience</a>
             </nav>
         </div>
     </header>
@@ -25,23 +25,21 @@
             <div class="container hero-grid">
                 <div class="hero-identity">
                     <p class="hero-kicker">Information System &middot; Universitas Indonesia</p>
-                    <h1>Tania Ju</h1>
+                    <h1>{{ name }}</h1>
                 </div>
                 <div class="hero-photo">
-                    <img class="avatar" src="/static/img/foto_tania.jpg" alt="Photo of Tania">
+                    <img class="avatar" src="/static/img/foto_tania.jpg" alt="Photo of {{ name }}">
                 </div>
                 <div class="hero-details">
-                    <p class="bio">Hello, I'm Tania! A driven student with a strong interest in technology and business. 
-                        I am committed to continuous self-development and 
-                        am actively exploring new opportunities to build scalable solutions and grow my expertise in the tech industry.</p>
+                    <p class="bio">{{ bio }}</p>
                     <dl class="meta-list">
                         <div class="meta-row">
                             <dt>NPM</dt>
-                            <dd>2506608123</dd>
+                            <dd>{{ npm }}</dd>
                         </div>
                         <div class="meta-row">
                             <dt>Program</dt>
-                            <dd>S1 Information System</dd>
+                            <dd>{{ study_program }}</dd>
                         </div>
                     </dl>
                     <div class="social-links">
@@ -52,79 +50,11 @@
                 </div>
             </div>
         </section>
-
-
-        <section class="experience container" id="experience">
-            <h1>Experience</h1>
-            <div class="experience-grid">
-                <div class="experience-card" onclick="this.classList.toggle('active')">
-                    <img class="experience-image" src="/static/img/logo-oh.jpe" alt="logo oh">
-                    <span class="year">2026</span>
-                    <h3 class="experience-role">IT Development Staff</h3>
-                    <h3 class="experience-title">Open House Fasilkom UI 2026</h3>
-
-                    <div class="experience-card-detail">
-                        <div class="experience-card-detail-inner">
-                            <p class="experience-description">● Developing an interactive event website to facilitate seamless registration for historically 2700+ participants.<br>
-                                ● Implementing responsive UI/UX designs and manage collaborative codebases using Git/GitHub.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="experience-card" onclick="this.classList.toggle('active')">
-                    <img class="experience-image" src="/static/img/logo-ristek.jpe" alt="logo ristek">
-                    <span class="year">2026</span>
-                    <h3 class="experience-role">People Operations Member</h3>
-                    <h3 class="experience-title">RISTEK Fasilkom UI 2026</h3>
-
-                    <div class="experience-card-detail">
-                        <div class="experience-card-detail-inner">
-                            <p class="experience-description">● Manage onboarding sessions for 20 internal and 147 external members to ensure effective knowledge integration.<br>
-                                ● Bridge communication between technical leads and members to ensure workflow consistency.<br>
-                                ● Engage in multidisciplinary internal classes to build a holistic understanding of organizational or self potential.<br>
-                                ● Design and manage visual branding assets for NetSOS and RISTEK using Figma.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="experience-card" onclick="this.classList.toggle('active')">
-                    <img class="experience-image" src="/static/img/logo-oh.jpe" alt="logo oh">
-                    <span class="year">2025</span>
-                    <h3 class="experience-role">Human Resources Staff</h3>
-                    <h3 class="experience-title ">Open House Fasilkom UI 2025</h3>
-
-                    <div class="experience-card-detail">
-                        <div class="experience-card-detail-inner">
-                            <p class="experience-description">● Hold and assist with UI/UX division tasks.<br>
-                                ● Manage the effectiveness of the relationship among division colleagues.<br>
-                                ● Ensure the harmony between division colleagues is maintained.<br>
-                                ● Practicing skills for public speaking, communication, socializing, empathy, and problem-solving.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="experience-card" onclick="this.classList.toggle('active')">
-                    <img class="experience-image" src="/static/img/logo-triaksang.jpe" alt="logo triaksang">
-                    <span class="year">2025</span>
-                    <h3 class="experience-role">Event Staff</h3>
-                    <h3 class="experience-title">Triaksang Arung 2025</h3>
-
-                    <div class="experience-card-detail">
-                        <div class="experience-card-detail-inner">
-                            <p class="experience-description">● Served as Master of Ceremonies (MC), guiding the event flow and maintaining a warm, engaging atmosphere for the elderly.<br>
-                                ● Facilitated interactive sessions, prioritizing the comfort and engagement of elderly participants.<br>
-                                ● Managed venue readiness and quickly resolved on-ground operational issues.<br>
-                                ● Collaborated with cross-functional teams to execute a seamless social outreach program.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Tania Ju. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+            <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
         </div>
     </footer>
 </body>
