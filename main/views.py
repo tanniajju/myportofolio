@@ -24,6 +24,8 @@ def show_experience(request):
 
 def show_skill(request):
     context = { 
-        'skill_list': Skill.objects.all(),
+        'languages': Skill.objects.filter(category="languages"),
+        'frameworks': Skill.objects.filter(category="frameworks"),
+        'tools':Skill.objects.filter(category='tools'),
     }
     return render(request, "skill.html", context)
