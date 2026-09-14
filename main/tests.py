@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from main.models import Experience
+from main.models import Experience, Skill
 
 
 class MainTest(TestCase):
@@ -56,3 +56,46 @@ class MainTest(TestCase):
         self.assertFalse(self.experience.is_ongoing)
         self.assertContains(response, "Selesai")
         self.assertNotContains(response, "Sedang berlangsung")
+
+
+class SkillTest(TestCase):
+    def setUp(self):
+        self.skill = Skill.objects.create(
+            name="CSS",
+            category="languages",
+            image_path="img/css.svg",
+        )
+        
+    def test_skills_url_is_accessible(self):
+        response = self.client.get(reverse("main:show_skill"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "skill.html")
+        self.assertContains(response, self.skill.name)
+        self.assertContains(response, f'href="{reverse("main:show_main")}"')
+
+    def test_nonexistent_page_returns_404(self):
+        response = self.client.get("/halaman-yang-tidak-ada/")
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_skill_model(self):
+        self.assertEqual(str(self.skill), "CSS")
+        self.assertEqual(self.skill.category, "languages")
+        self.assertEqual(self.skill.image_path, "img/css.svg")
+
+    def test_skill_page(self):
+        response = self.client.get(reverse("main:show_skill"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "skill.html")
+        self.assertContains(response, self.skill.name)
+        self.assertContains(response, self.skill.description)
+        self.assertContains(response, "CSS")
+        self.assertContains(response, "Proficient")
+        self.assertContains(response, f'href="{reverse("main:show_main")}"')
+
+    def empty_skill_page(self):
+        Skill.objects.all().delete()
+        response = self.client.get(reverse("main:show_skill"))
+
+        self.assertContains(response, "Belum ada keahlian yang ditambahkan.")
