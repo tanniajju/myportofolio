@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience - {{ name }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
+            <nav>
+                <a href="{% url 'main:show_main' %}">Profile</a>
+                <a href="{% url 'main:show_experience' %}">Experience</a>
+                <a href="{% url 'main:show_skill' %}">Skill</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+    {% load static %}
+    <section class="skill-section" id="skill">
+        <div class="container">
+            <h1>Skills</h1>
+            <p class="section-kicker">Beberapa keahlian terkait</p>
+
+            <div class="skill-board">
+
+                {% regroup skill_list by get_category_display as grouped_skill_list %}
+
+                {% for group in grouped_skill_list %}
+                    <div class="skill-column">
+                        <div class="skill-column-header">{{ group.grouper }}</div>
+                        {% for skill in group.list %}
+                            <article class="skill-card">
+                                {% if skill.image_path %}
+                                    <img src="{% static skill.image_path %}" alt="{{ skill.name }}" class="skill-icon">
+                                {% endif %}
+                                <div class="skill-info">
+                                    <h3 class="skill-name">{{ skill.name }}</h3>
+                                    <p class="skill-desc">{{ skill.description }}</p>
+                                    <span class="skill-level">{{ skill.get_level_display }}</span>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+
+                {% empty %}
+                    <p class="empty-state">Belum ada data keahlian yang ditambahkan.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    </main>
+</body>
