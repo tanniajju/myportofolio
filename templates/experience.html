@@ -55,9 +55,22 @@
 </main>
 
     <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
+                <p class="footer-desc">Personal portfolio website - Individual Assignment PBP A</p>
+            </div>
+
+            <nav class="footer-nav">
+                <a href="{% url 'main:show_main' %}">Profile</a>
+                <a href="{% url 'main:show_experience' %}">Experience</a>
+                <a href="{% url 'main:show_skill' %}">Skill</a>
+            </nav>
         </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+        </div>    
     </footer>
 </body>
 </html>
