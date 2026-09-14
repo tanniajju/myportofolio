@@ -274,3 +274,72 @@ h1, .brand{
     font-size: 0.85rem;
     font-weight: 600;
 }
+
+.skill-section {
+    padding: 4rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.skill-section h1 {
+    margin: 0.4rem 0;
+    font-size: 2rem;
+}
+
+.skill-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.skill-column-header {
+    background-color: var(--accent);
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 1.5rem;
+    color: whitesmoke;
+}
+
+.skill-card {
+    display: flex;
+    align-items: flex-start;
+    background-color: whitesmoke;
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.55);
+    background-color: white;
+}
+
+.skill-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-right: 1rem;
+}
+
+.skill-info {
+    flex: 1;
+}
+
+.skill-name {
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.skill-desc {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
