@@ -18,9 +18,10 @@ Kelas : PBP A
 
 | Minggu | Tanggal | Progress / Fitur yang Dikerjakan | Kendala & Solusi Teknis |
 | :---: | :--- | :--- | :--- |
-| **1** | 24 - 28 Aug 2026 | Setup Git repository, Django Installation | - |
-| **2** | 31 - 04 Sep 2026 | Setup HTML kerangka dasar dan penyusunan section *Hero* | Localhost sempat tidak merespons perubahan pada *style.css*. Solusi: melakukan reset server/koneksi hingga terupdate|
-| **3** | 07 Sep 2026 | Penyusunan section *Experience* | Penggunaan layout carousel horizontal untuk section *Experience* menyebabkan perbedaan tinggi tiap *card*. Solusi: Menerapkan layout grid. |
+| **1** | 24 - 30 Aug 2026 | Setup Git repository, Django Installation | - |
+| **2** | 31 Aug - 06 Sep 2026 | Setup HTML kerangka dasar dan penyusunan section *Hero* | Localhost sempat tidak merespons perubahan pada *style.css*. Solusi: melakukan reset server/koneksi hingga terupdate|
+| **3** | 07 - 13 Sep 2026 | Penyusunan section *Experience* | Penggunaan layout carousel horizontal untuk section *Experience* menyebabkan perbedaan tinggi tiap *card*. Solusi: Menerapkan layout grid. |
+| **4** | 14 Sep 2026 | Penyusunan section *Skill* dengan implementasi MVT, navigasi *footer*, unit testing *Skill* | - |
 ---
 
 # Tugas 1
