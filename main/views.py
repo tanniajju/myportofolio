@@ -24,6 +24,7 @@ def show_experience(request):
 
 def show_skill(request):
     context = { 
-        'skill_list': Skill.objects.all().order_by('category'),
+        "name": "Tania Ju",
+        "skill_list": Skill.objects.all().order_by('category'),
     }
     return render(request, "skill.html", context)
