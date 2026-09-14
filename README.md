@@ -5,9 +5,47 @@ NPM : 2506608123
 
 Kelas : PBP A
 
+## Panduan Instalasi
+### 1. Clone Repositori & Persiapan env
+```bash
+# Clone repositori ini
+git clone <https://github.com/tanniajju/myportofolio.git>
+cd myportofolio
+
+# Buat virtual environment
+python -m venv env
+
+# Aktifkan virtual environment
+# Windows:
+env\Scripts\activate
+# macOS/Linux:
+source env/bin/activate
+```
+
+### 2. Instal Dependensi
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Migrasi Database & Menjalankan Pengujian
+```bash
+# Jalankan migrasi basis data
+python manage.py migrate
+
+# Jalankan seluruh unit test untuk memastikan fungsionalitas berjalan normal
+python manage.py test main
+```
+
+### 4. Menjalankan Server Pengembangan
+```bash
+python manage.py runserver
+```
+Buka peramban dan akses alamat http://localhost:8000/.
+
 ## Section
 * **Hero section:** Berisi informasi berupa data diri saya untuk portofolio
 * **Experience:** Berisi pengalaman organisasi saya selama berkuliah di Fasilkom UI
+* **Skill:** Berisi keahlian (bahasa pemrograman, *framework*, dan *tool/platform*) yang saya pelajari sejauh ini
 
 ## Fitur Utama
 *   **Semantic HTML Structure:** Menggunakan tag semantik HTML5 (`<section>`, `<nav>`, `<article>`) untuk aksesibilitas dan SEO yang optimal.
