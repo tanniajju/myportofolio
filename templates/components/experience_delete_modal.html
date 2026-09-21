@@ -1,0 +1,25 @@
+<button type="button" class="button button-danger" popovertarget="delete-exp-{{ experience.id }}">
+    Hapus
+</button>
+
+<div id="delete-exp-{{ experience.id }}" class="delete-modal" popover="auto">
+    <div class="delete-modal-content">
+        <h2 style="margin-top: 0;">Hapus Experience?</h2>
+        <p>Yakin ingin menghapus <strong>{{ experience.title }}</strong>?</p>
+        
+        <form method="post" action="{% url 'main:delete_experience' experience.id %}">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="password" 
+                       name="secret_code" 
+                       placeholder="Masukkan password..." 
+                       required>
+            </div>
+            
+            <div class="delete-modal-actions">
+                <button type="button" class="button button-secondary" popovertarget="delete-exp-{{ experience.id }}" popovertargetaction="hide">Batal</button>
+                <button type="submit" class="button button-danger">Ya, Hapus</button>
+            </div>
+        </form>
+    </div>
+</div>

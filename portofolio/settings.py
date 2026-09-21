@@ -14,12 +14,14 @@ from pathlib import Path
 
 import os
 from dotenv import load_dotenv
+
+CSRF_TRUSTED_ORIGINS = ["https://tania-ju-myportofolio.pws.cs.ui.ac.id"]
+
 # Load environment variables from .env file
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
