@@ -60,6 +60,7 @@ Buka peramban dan akses alamat http://localhost:8000/.
 | **2** | 31 Aug - 06 Sep 2026 | Setup HTML kerangka dasar dan penyusunan section *Hero* | Localhost sempat tidak merespons perubahan pada *style.css*. Solusi: melakukan reset server/koneksi hingga terupdate|
 | **3** | 07 - 13 Sep 2026 | Penyusunan section *Experience* | Penggunaan layout carousel horizontal untuk section *Experience* menyebabkan perbedaan tinggi tiap *card*. Solusi: Menerapkan layout grid. |
 | **4** | 14 Sep 2026 | Penyusunan section *Skill* dengan implementasi MVT, navigasi *footer*, unit testing *Skill* | - |
+| **5** | 21  Sep 2026 | Penyusunan section *Skill, Experience, Project* dengan implementasi *Form & Data Delivery* | - |
 ---
 
 # Tugas 1

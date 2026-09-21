@@ -244,6 +244,18 @@ h1, .brand{
     }
 }
 
+.section-kicker {
+    color: var(--accent-dark);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   EXPERIENCE PAGE STYLING
+   ========================================= */
+
 .experience-section {
     padding: 4rem 0;
     border-top: 1px solid var(--line);
@@ -251,19 +263,11 @@ h1, .brand{
 
 .experience-image {
     width: 100%;
-    height: 120px; /* Tinggi banner gambar */
-    object-fit: cover; /* Biar gambar tidak gepeng */
-    border-radius: 8px; /* Sedikit melengkung di bagian ujung */
+    height: 120px; 
+    object-fit: cover; 
+    border-radius: 8px; 
     margin-bottom: 1rem;
-    background-color: rgba(0,0,0,0.05); /* Warna abu-abu pudar selagi gambar di-load */
-}
-
-.section-kicker {
-    color: var(--accent-dark);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    background-color: rgba(0,0,0,0.05); 
 }
 
 .experience-section h1 {
@@ -274,14 +278,10 @@ h1, .brand{
 .experience-carousel {
     display: flex;
     gap: 1.5rem;
-    overflow-x: auto; /* Memunculkan scrollbar horizontal jika melebihi layar */
+    overflow-x: auto; 
     padding-bottom: 1rem;
-    scroll-snap-type: x mandatory; /* Membuat geseran / scroll lebih mulus (magnet) */
-    
-    /* Mengubah tampilan scrollbar agar lebih elegan (untuk browser berbasis Chrome/Safari) */
+    scroll-snap-type: x mandatory; 
     scrollbar-width: thin;
-
-    
     -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
@@ -311,17 +311,16 @@ h1, .brand{
     border: 2px solid #d9b3ff;
 }
 
-/* Memperbaiki jarak teks dan tombol di dalam card */
+
 .experience-card {
-    flex: 0 0 350px; /* Lebar card dipaksa tetap 350px */
-    height: 420px; /* TINGGI TETAP UNTUK SEMUA CARD */
+    flex: 0 0 350px; 
+    height: 420px; 
     scroll-snap-align: start;
-    
     padding: 1.25rem 1.5rem;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Sedikit bayangan agar lebih menonjol */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
 }
 
 .experience-description {
@@ -337,7 +336,7 @@ h1, .brand{
     letter-spacing: 1px;
     margin-bottom: 0.5rem;
     display: block;
-    opacity: 0.7; /* Sedikit transparan agar tidak menyaingi judul */
+    opacity: 0.7; 
 }
 
 .experience-title {
@@ -347,10 +346,10 @@ h1, .brand{
 }
 
 .experience-content {
-    flex-grow: 1; /* Mendorong tombol ke bawah */
-    overflow-y: auto; /* Memunculkan scroll internal jika teks kepanjangan */
+    flex-grow: 1; 
+    overflow-y: auto; 
     margin-bottom: 0.5rem;
-    padding-right: 0.5rem; /* Ruang bernapas untuk scrollbar */
+    padding-right: 0.5rem; 
 }
 
 .experience-content::-webkit-scrollbar {
@@ -372,6 +371,10 @@ h1, .brand{
     font-size: 0.85rem;
     font-weight: 600;
 }
+
+/* =========================================
+   SKILL PAGE STYLING
+   ========================================= */
 
 .skill-section {
     padding: 4rem 0;
@@ -442,6 +445,10 @@ h1, .brand{
     line-height: 1.4;
 }
 
+/* =========================================
+   PROJECT PAGE STYLING
+   ========================================= */
+
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -456,7 +463,7 @@ h1, .brand{
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    height: 480px; /* Tinggi seragam agar rapi sejajar */
+    height: 480px; 
     padding: 1.5rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -490,9 +497,8 @@ h1, .brand{
     display: block;
 }
 
-/* Area deskripsi dengan scroll internal jika teks terlalu panjang */
 .project-description-container {
-    flex-grow: 1; /* Mendorong tombol aksi ke bawah */
+    flex-grow: 1; 
     overflow-y: auto;
     margin-bottom: 1rem;
     padding-right: 4px;
@@ -514,7 +520,6 @@ h1, .brand{
     white-space: pre-line;
 }
 
-/* Bagian bawah card (Tombol Lihat Project & Hapus) */
 .project-card-actions {
     margin-top: auto; 
     padding-top: 0.75rem;
@@ -522,198 +527,6 @@ h1, .brand{
     display: flex;
     gap: 0.75rem;
     align-items: center;
-}
-
-.form-group {
-    margin-bottom: 1.25rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.4rem;
-    font-weight: 700;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0.7rem;
-    border: 1px solid var(--accent);
-    border-radius: var(--radius);
-    font: inherit;
-    transition:
-        border-color 0.2s ease,
-        outline-color 0.2s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: 2px solid var(--accent);
-    border-color: var(--accent);
-}
-
-.form-error {
-    color: #b42318;
-    font-size: 0.85rem;
-    margin-top: 0.35rem;
-}
-
-/* =========================================
-   GLOBAL FORM & CARD STYLING (UNTUK SEMUA MODULE)
-   ========================================= */
-
-.form-section {
-    min-height: 80vh; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    padding: 2rem 0;
-}
-
-.form-card {
-    background-color: white; 
-    padding: 2.5rem; 
-    border-radius: 12px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    max-width: 600px; 
-    width: 100%;
-}
-
-.form-card h1 {
-    margin-top: 0; 
-    margin-bottom: 0.5rem; 
-    font-size: 1.8rem;
-}
-
-.form-card p.subtitle {
-    color: #666; 
-    margin-bottom: 2rem;
-}
-
-/* Merapikan tampilan form bawaan Django (as_p) */
-.django-form-fields p {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1.25rem;
-}
-
-.django-form-fields label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
-
-.django-form-fields input,
-.django-form-fields select,
-.django-form-fields textarea,
-.form-input-password {
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-family: inherit;
-    font-size: 1rem;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.django-form-fields input:focus,
-.django-form-fields select:focus,
-.django-form-fields textarea:focus,
-.form-input-password:focus {
-    outline: none;
-    border-color: #a33b3b; 
-    box-shadow: 0 0 0 3px rgba(163, 59, 59, 0.1);
-}
-
-.django-form-fields textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-/* =========================================
-   MODAL DELETE STYLING
-   ========================================= */
-
-.delete-modal {
-    margin: auto; 
-    padding: 2rem;
-    border: none;
-    border-radius: 16px;
-    background-color: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    width: 90%;
-    max-width: 400px; 
-    text-align: center;
-}
-
-.delete-modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
-}
-
-.delete-modal p {
-    color: #555;
-    margin-bottom: 1.5rem;
-}
-
-.delete-modal .input-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    box-sizing: border-box;
-    font-size: 1rem;
-}
-
-.delete-modal .input-group input:focus {
-    outline: none;
-    border-color: #a33b3b;
-}
-
-.delete-modal-actions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-/* Styling untuk kotak pesan error/sukses */
-.alert-message {
-    padding: 12px 15px;
-    border-radius: 6px;
-    margin-bottom: 1.5rem;
-    border-left: 4px solid transparent;
-}
-
-.alert-error {
-    background-color: #ffe5e5;
-    color: #d63301;
-    border-left-color: #d63301;
-}
-
-.alert-success {
-    background-color: #e5ffe5;
-    color: #0f5132;
-    border-left-color: #0f5132;
-}
-
-.button {
-    display: inline-block;
-    height: fit-content;
-    border: 0;
-    border-radius: var(--radius);
-    padding: 0.65rem 1rem;
-    background: var(--accent);
-    color: white;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-.button-secondary {
-    background: var(--ink);
 }
 
 .project-header {
@@ -806,6 +619,203 @@ h1, .brand{
     margin-top: 0;
 }
 
+@media (max-width: 600px) {
+    .project-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .project-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .project-add-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .project-search {
+        flex-direction: column;
+    }
+
+    .project-search .button {
+        width: 100%;
+    }
+
+    .project-delete-modal {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .project-delete-modal__content {
+        width: 100%;
+        padding: 1.25rem;
+        border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .project-delete-modal__actions {
+        flex-direction: column-reverse;
+    }
+
+    .project-delete-modal__actions .button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* =========================================
+   GLOBAL FORM & CARD STYLING (UNTUK SEMUA MODULE)
+   ========================================= */
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.7rem;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    font: inherit;
+    transition:
+        border-color 0.2s ease,
+        outline-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: 2px solid var(--accent);
+    border-color: var(--accent);
+}
+
+.form-error {
+    color: #b42318;
+    font-size: 0.85rem;
+    margin-top: 0.35rem;
+}
+
+.form-section {
+    min-height: 80vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 2rem 0;
+}
+
+.form-card {
+    background-color: white; 
+    padding: 2.5rem; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    max-width: 600px; 
+    width: 100%;
+}
+
+.form-card h1 {
+    margin-top: 0; 
+    margin-bottom: 0.5rem; 
+    font-size: 1.8rem;
+}
+
+.form-card p.subtitle {
+    color: #666; 
+    margin-bottom: 2rem;
+}
+
+.django-form-fields p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+}
+
+.django-form-fields label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.django-form-fields input,
+.django-form-fields select,
+.django-form-fields textarea,
+.form-input-password {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.django-form-fields input:focus,
+.django-form-fields select:focus,
+.django-form-fields textarea:focus,
+.form-input-password:focus {
+    outline: none;
+    border-color: #a33b3b; 
+    box-shadow: 0 0 0 3px rgba(163, 59, 59, 0.1);
+}
+
+.django-form-fields textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* =========================================
+   MODAL DELETE STYLING
+   ========================================= */
+
+.delete-modal {
+    margin: auto; 
+    padding: 2rem;
+    border: none;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 400px; 
+    text-align: center;
+}
+
+.delete-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+.delete-modal p {
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.delete-modal .input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.delete-modal .input-group input:focus {
+    outline: none;
+    border-color: #a33b3b;
+}
+
+.delete-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
 .delete-modal {
     margin: auto;
     padding: 2rem;
@@ -850,46 +860,46 @@ h1, .brand{
     gap: 1rem;
 }
 
-.button-danger {
-    background: #b42318;
+/* =========================================
+    ALERT MESSAGE STYLING
+   ========================================= */
+.alert-message {
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid transparent;
 }
 
-@media (max-width: 600px) {
-    .project-header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
+.alert-error {
+    background-color: #ffe5e5;
+    color: #d63301;
+    border-left-color: #d63301;
+}
 
-    .project-add-button {
-        width: 100%;
-        justify-content: center;
-    }
+.alert-success {
+    background-color: #e5ffe5;
+    color: #0f5132;
+    border-left-color: #0f5132;
+}
 
-    .project-search {
-        flex-direction: column;
-    }
+.button {
+    display: inline-block;
+    height: fit-content;
+    border: 0;
+    border-radius: var(--radius);
+    padding: 0.65rem 1rem;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+}
 
-    .project-search .button {
-        width: 100%;
-    }
+.button-secondary {
+    background: var(--ink);
+}
 
-    .project-delete-modal {
-        align-items: flex-end;
-        padding: 0;
-    }
-
-    .project-delete-modal__content {
-        width: 100%;
-        padding: 1.25rem;
-        border-radius: var(--radius) var(--radius) 0 0;
-    }
-
-    .project-delete-modal__actions {
-        flex-direction: column-reverse;
-    }
-
-    .project-delete-modal__actions .button {
-        width: 100%;
-        text-align: center;
-    }
+.button-danger {
+    background: #b42318;
 }
