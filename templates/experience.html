@@ -56,16 +56,16 @@
                                     {{ exp.description }}
                                 </p>
                             </div>
+
+                            <span class="badge {% if exp.is_ongoing %}status-ongoing{% else %}status-completed{% endif %}">
+                                {% if exp.is_ongoing %}Sedang berlangsung{% else %}Selesai{% endif %}
+                            </span>
                             
                             <div class="project-card-actions" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-                                <!-- Badge Status -->
-                                <span class="badge status-{{ exp.status|lower }}">
-                                    {{ exp.status }}
-                                </span>
 
                                 <!-- Modal Hapus -->
                                 <div class="project-actions">
-                                    {% include "components\experience_delete_modal.html" with experience=exp %}
+                                    {% include "components/experience_delete_modal.html" with experience=exp %}
                                 </div>
                             </div>
                         </article>

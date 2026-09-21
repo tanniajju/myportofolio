@@ -74,13 +74,6 @@ def delete_experience(request, experience_id):
             
     return redirect("main:show_experience")
 
-def show_skill(request):
-    context = { 
-        "name": "Tania Ju",
-        "skill_list": Skill.objects.all().order_by('category'),
-    }
-    return render(request, "skill.html", context)
-
 def create_project(request):
     form = ProjectForm(request.POST or None)
 

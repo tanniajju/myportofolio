@@ -16,7 +16,7 @@ class Experience(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    category = models.CharField(max_length=20, choices=EXPERIENCE_CHOICES, default='commitee')
+    category = models.CharField(max_length=20, choices=EXPERIENCE_CHOICES, default='committee')
     thumbnail = models.URLField(blank=True, null=True)
     started_at = models.DateField(default=timezone.now)
     ended_at = models.DateField(blank=True, null=True)
@@ -25,7 +25,7 @@ class Experience(models.Model):
 
     @property
     def is_ongoing(self):
-        return self.ended_at is None
+        return self.ended_at is None or self.ended_at > timezone.now().date()
 
 class Skill(models.Model):
     SKILL_CHOICES = [
