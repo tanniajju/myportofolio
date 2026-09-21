@@ -80,6 +80,6 @@ def delete_project(request, project_id):
     if request.method == "POST":
         project.delete()
         messages.success(request, "Project berhasil dihapus!")
-        return redirect("main:show_projects")
+        return redirect("main:show_project")
 
-    return redirect("main:show_projects")
+    return redirect("main:show_project")
