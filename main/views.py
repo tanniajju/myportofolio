@@ -3,8 +3,9 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from main.models import Experience, Skill, Project
-from main.forms import ProjectForm, SkillForm
+from main.forms import ExperienceForm, SkillForm, ProjectForm
 
+PASSWORD = "tambahinaja"
 
 def show_main(request):
     context = {
@@ -19,12 +20,59 @@ def show_main(request):
     return render(request, "index.html", context)
 
 
+def create_experience(request):
+    form = ExperienceForm(request.POST or None)
+    if request.method == "POST":
+        input_kode = request.POST.get('secret_code')
+        
+        if input_kode == PASSWORD:
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Experience berhasil ditambahkan!")
+                return redirect("main:show_experience")
+        else:
+            messages.error(request, "Kode rahasia salah! Gagal menambahkan data.")
+            
+    context = {"form": form}
+    return render(request, "experience_form.html", context)
+
 def show_experience(request):
+    json_response = get_experiences_json(request)
+    experiences = serializers.deserialize("json", json_response.content.decode("utf-8"))
+    experiences = [exp.object for exp in experiences]
+    
+    title_query = request.GET.get("title", "").strip()
+
     context = {
         "name": "Tania Ju",
-        "experience_list": Experience.objects.all(),
+        "experience_list": experiences,
+        "title_query": title_query,
     }
     return render(request, "experience.html", context)
+
+def get_experiences_json(request):
+    title_query = request.GET.get("title", "").strip()
+    experiences = Experience.objects.all()
+
+    if title_query:
+        experiences = experiences.filter(title__icontains=title_query)
+
+    experiences_json = serializers.serialize("json", experiences)
+    return HttpResponse(experiences_json, content_type="application/json")
+
+def delete_experience(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+    if request.method == "POST":
+        # Ambil input kode rahasia dari modal HTML
+        input_kode = request.POST.get('secret_code')
+        
+        if input_kode == PASSWORD:
+            experience.delete()
+            messages.success(request, "Experience berhasil dihapus!")
+        else:
+            messages.error(request, "Kode rahasia salah! Gagal menghapus data.")
+            
+    return redirect("main:show_experience")
 
 def show_skill(request):
     context = { 
@@ -86,16 +134,18 @@ def delete_project(request, project_id):
 
 def create_skill(request):
     form = SkillForm(request.POST or None)
-
-    if request.method == "POST" and form.is_valid():
-        form.save()
-        messages.success(request, "Skill baru berhasil ditambahkan!")
-        return redirect("main:show_skill")
-
-    context = {
-        "name": "Tania Ju",
-        "form": form,
-    }
+    if request.method == "POST":
+        input_kode = request.POST.get('secret_code')
+        
+        if input_kode == PASSWORD:
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Skill baru berhasil ditambahkan!")
+                return redirect("main:show_skill")
+        else:
+            messages.error(request, "Password salah! Gagal menambahkan skill.")
+            
+    context = {"form": form}
     return render(request, "skill_form.html", context)
 
 def show_skill(request):
@@ -127,10 +177,13 @@ def get_skills_json(request):
 
 def delete_skill(request, skill_id):
     skill = get_object_or_404(Skill, pk=skill_id)
-
     if request.method == "POST":
-        skill.delete()
-        messages.success(request, "Skill berhasil dihapus!")
-        return redirect("main:show_skill")
-
+        input_kode = request.POST.get('secret_code')
+        
+        if input_kode == PASSWORD:
+            skill.delete()
+            messages.success(request, "Skill berhasil dihapus!")
+        else:
+            messages.error(request, "Password salah! Gagal menghapus skill.")
+            
     return redirect("main:show_skill")

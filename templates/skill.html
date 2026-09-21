@@ -30,6 +30,16 @@
                 <button type="submit" class="button">Cari</button>
             </form>
 
+            {% if messages %}
+                <div class="container" style="margin-top: 1rem;">
+                    {% for message in messages %}
+                        <div class="alert-message {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}" style="text-align: center;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <div class="skill-board">
                 {% regroup skill_list by get_category_display as grouped_skill_list %}
 

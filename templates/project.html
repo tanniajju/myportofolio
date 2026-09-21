@@ -4,20 +4,31 @@
 {% endblock meta %}
 {% block content %}
     <main>
-        <section class="experience-section" id="experience">
+        <section class="project-section" id="project" style="padding: 3rem 0;">
             <div class="container">
                 <p class="section-kicker">Karya yang saya bangun</p>
+                
+                <!-- Header & Tombol Tambah -->
                 <div class="project-header">
                     <h1>Projects</h1>
-                    <a href="{% url 'main:create_project' %}"
-                       class="button project-add-button">
-                        <span aria-hidden="true">+</span>
-                        Tambah Proyek
+                    <a href="{% url 'main:create_project' %}" class="button project-add-button">
+                        <span aria-hidden="true">+</span> Tambah Proyek
                     </a>
                 </div>
-                <form method="get"
-                      action="{% url 'main:show_project' %}"
-                      class="project-search">
+
+                <!-- Blok Notifikasi Pesan -->
+                {% if messages %}
+                    <div style="margin-bottom: 2rem;">
+                        {% for message in messages %}
+                            <div class="alert-message {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}" style="text-align: center;">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Form Pencarian -->
+                <form method="get" action="{% url 'main:show_project' %}" class="project-search">
                     <input type="search"
                            name="title"
                            value="{{ title_query }}"
@@ -26,25 +37,35 @@
                            aria-label="Cari berdasarkan nama proyek">
                     <button type="submit" class="button">Cari</button>
                 </form>
-                <div class="experience-grid project-grid">
+
+                <!-- Grid Proyek (Menggunakan styling khusus project) -->
+                <div class="project-grid">
                     {% for project in project_list %}
-                        <article class="experience-card">
+                        <article class="project-card">
+                            
                             {% if project.project_image_url %}
                                 <img src="{{ project.project_image_url }}"
                                      alt="Gambar {{ project.title }}"
                                      class="project-image">
                             {% endif %}
-                            <h2>{{ project.title }}</h2>
-                            <span class="experience-category">{{ project.tech_stack }}</span>
-                            <p class="experience-description">{{ project.description }}</p>
-                            <div class="project-card-actions">
-                                <div class="project-actions">
-                                    {% if project.project_url %}
-                                        <a href="{{ project.project_url }}" class="button">Lihat Project</a>
-                                    {% endif %}
-                                    {% include "components\project_detele_modal.html" with project=project %}
-                                </div>
+                            
+                            <h2 class="project-title">{{ project.title }}</h2>
+                            <span class="project-tech-stack">{{ project.tech_stack }}</span>
+                            
+                            <!-- Pembungkus deskripsi dengan scrollbar internal -->
+                            <div class="project-description-container">
+                                <p class="project-description">{{ project.description }}</p>
                             </div>
+                            
+                            <!-- Tombol Aksi di bagian bawah -->
+                            <div class="project-card-actions">
+                                {% if project.project_url %}
+                                    <a href="{{ project.project_url }}" class="button" target="_blank" style="flex: 1; text-align: center; justify-content: center;">Lihat Project</a>
+                                {% endif %}
+                                
+                                {% include "components/project_delete_modal.html" with project=project %}
+                            </div>
+
                         </article>
                     {% empty %}
                         {% if title_query %}
@@ -54,6 +75,7 @@
                         {% endif %}
                     {% endfor %}
                 </div>
+
             </div>
         </section>
     </main>

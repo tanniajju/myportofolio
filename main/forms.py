@@ -1,5 +1,62 @@
-from django.forms import ModelForm, TextInput, Textarea, URLInput, Select, NumberInput
-from main.models import Project, Skill
+from django.forms import ModelForm, TextInput, Textarea, URLInput, Select, NumberInput, DateInput, ChoiceField
+from main.models import Experience, Project, Skill
+
+class ExperienceForm(ModelForm):
+    category = ChoiceField(
+        choices=[('', '--- Pilih kategori ---')] + Experience.EXPERIENCE_CHOICES,
+        widget=Select(attrs={'class': 'form-select'})
+    )
+    class Meta:
+        model = Experience
+        fields = [
+            "title",
+            "description",
+            "category",
+            "thumbnail",
+            "started_at",
+            "ended_at"
+        ]
+
+        labels = {
+            "title": "Nama pengalaman",
+            "description": "Deskripsi pengalaman",
+            "category": "Kategori pengalaman",
+            "thumbnail": "URL gambar terkait pengalaman",
+            "started_at": "Waktu pengalaman dimulai",
+            "ended_at": "Waktu pengalaman selesai",
+        }
+
+        widgets = {
+            "title": TextInput(
+                attrs={
+                    "placeholder": "Staff Acara Project Kesenian",
+                    "maxlength": 255,
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Ceritakan Tentang Skillmu",
+                    "rows": 3,
+                }
+            ),
+            "thumbnail": URLInput(
+                attrs={
+                    "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
+                }
+            ),
+            'started_at': DateInput(
+                attrs={
+                    'type': 'date',
+                    'class': 'form-control',
+                }
+            ),
+            'ended_at': DateInput(
+                attrs={
+                    'type': 'date',
+                    'class': 'form-control',
+                }
+            ),
+        }
 
 class ProjectForm(ModelForm):
     class Meta:
@@ -51,6 +108,11 @@ class ProjectForm(ModelForm):
         }
 
 class SkillForm(ModelForm):
+    category = ChoiceField(
+        choices=[('', '--- Pilih kategori ---')] + Skill.SKILL_CHOICES,
+        widget=Select(attrs={'class': 'form-select'})
+    )
+
     class Meta:
         model = Skill
         fields = [
@@ -81,9 +143,6 @@ class SkillForm(ModelForm):
                     "placeholder": "Ceritakan Tentang Skillmu",
                     "rows": 3,
                 }
-            ),
-            "category": Select(
-                attrs={'class': 'form-select'}
             ),
             "nilai": NumberInput(attrs={
                 "type": "range",               

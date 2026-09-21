@@ -1,41 +1,81 @@
 {% extends "base.html" %}
 {% block meta %}
-    <title>Projects - {{ name }}</title>
+    <title>Experience - {{ name }}</title>
 {% endblock meta %}
 {% block content %}
     <main>
-    <section class="experience-section" id="experience">
-        <div class="container">
-            <p class="section-kicker">Perjalanan saya sejauh ini</p>
-            <h1>Experience</h1>
+        <section class="experience-section" id="experience">
+            <div class="container">
+                <p class="section-kicker">Perjalanan saya sejauh ini</p>
+                
+                <!-- Header & Tombol Tambah -->
+                <div class="project-header">
+                    <h1>Experience</h1>
+                    <a href="{% url 'main:create_experience' %}" class="button project-add-button">
+                        <span aria-hidden="true">+</span> Tambah Experience
+                    </a>
+                </div>
 
-            <div class="experience-grid">
-                {% for experience in experience_list %}
-                    <article class="experience-card experience-card-{{ experience.category }}">
-                        <span class="experience-category">
-                            {{ experience.get_category_display }}
-                        </span>
-                        <h2>{{ experience.title }}</h2>
-                        <p class="experience-description">
-                            {{ experience.description }}
+                <!-- Form Pencarian -->
+                <form method="get" action="{% url 'main:show_experience' %}" class="project-search">
+                    <input type="search" name="title" value="{{ title_query }}"
+                           placeholder="Cari pengalaman..." class="project-search__input">
+                    <button type="submit" class="button">Cari</button>
+                </form>
+
+                <!-- Blok Pesan (Opsional, letakkan di bawah judul atau search bar jika ingin ada notifikasi) -->
+                {% if messages %}
+                    <div class="container" style="margin-top: 1rem;">
+                        {% for message in messages %}
+                            <div class="alert-message {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}" style="text-align: center;">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Grid Experience -->
+                <div class="experience-carousel">
+                    {% for exp in experience_list %}
+                        <article class="experience-card category-{{ exp.category }}">
+
+                            {% if exp.thumbnail %}
+                                <img src="{{ exp.thumbnail }}" alt="{{ exp.title }}" class="experience-image">
+                            {% endif %}
+
+                            <span class="experience-category">
+                                {{ exp.get_category_display|upper }}
+                            </span>
+                            <!-- Kategori (Part-Time, Volunteer, dll) -->
+                            
+                            <h2>{{ exp.title }}</h2> <!-- Posisi (contoh: Staff IT Development) -->
+                            
+                            <!-- Menampilkan deskripsi dengan pre-line agar enter/bullet point terbaca rapi -->
+                            <div class="experience-content">
+                                <p class="experience-description">
+                                    {{ exp.description }}
+                                </p>
+                            </div>
+                            
+                            <div class="project-card-actions" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                                <!-- Badge Status -->
+                                <span class="badge status-{{ exp.status|lower }}">
+                                    {{ exp.status }}
+                                </span>
+
+                                <!-- Modal Hapus -->
+                                <div class="project-actions">
+                                    {% include "components\experience_delete_modal.html" with experience=exp %}
+                                </div>
+                            </div>
+                        </article>
+                    {% empty %}
+                        <p class="empty-state" style="width: 100%;">
+                            {% if title_query %}Tidak ada experience yang cocok.{% else %}Belum ada experience yang ditambahkan.{% endif %}
                         </p>
-
-                        {% if experience.is_ongoing %}
-                            <p class="experience-status">Sedang berlangsung</p>
-                        {% else %}
-                            <p class="experience-status">Selesai</p>
-                        {% endif %}
-                    </article>
-                {% empty %}
-                    <p class="empty-state">
-                        Belum ada pengalaman yang ditambahkan.
-                    </p>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    </section>
-</main>
-</body>
-</html>
-
+        </section>
+    </main>
 {% endblock content %}

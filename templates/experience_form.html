@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block meta %}
-    <title>Add Skill - {{ name }}</title>
+    <title>Add Experience - {{ name }}</title>
 {% endblock meta %}
 {% block content %}
 <main>
@@ -8,8 +8,8 @@
         <div class="container">
             <div class="form-card">
                 
-                <h1>Tambah Skill Baru</h1>
-                <p class="subtitle">Masukkan detail keahlian terbarumu.</p>
+                <h1>Tambah Experience Baru</h1>
+                <p class="subtitle">Masukkan detail perjalanan dan pengalaman terbarumu.</p>
                 
                 <!-- Blok Pesan Error / Sukses -->
                 {% if messages %}
@@ -48,7 +48,7 @@
                         <button type="submit" class="button" style="flex: 1; justify-content: center;">
                             Tambah Data
                         </button>
-                        <a href="{% url 'main:show_skill' %}" class="button button-secondary" style="flex: 1; text-align: center;">
+                        <a href="{% url 'main:show_experience' %}" class="button button-secondary" style="flex: 1; text-align: center;">
                             Batal
                         </a>
                     </div>

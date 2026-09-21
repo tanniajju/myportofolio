@@ -249,6 +249,15 @@ h1, .brand{
     border-top: 1px solid var(--line);
 }
 
+.experience-image {
+    width: 100%;
+    height: 120px; /* Tinggi banner gambar */
+    object-fit: cover; /* Biar gambar tidak gepeng */
+    border-radius: 8px; /* Sedikit melengkung di bagian ujung */
+    margin-bottom: 1rem;
+    background-color: rgba(0,0,0,0.05); /* Warna abu-abu pudar selagi gambar di-load */
+}
+
 .section-kicker {
     color: var(--accent-dark);
     font-size: 0.8rem;
@@ -262,52 +271,95 @@ h1, .brand{
     font-size: 2rem;
 }
 
-.experience-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
+.experience-carousel {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto; /* Memunculkan scrollbar horizontal jika melebihi layar */
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory; /* Membuat geseran / scroll lebih mulus (magnet) */
+    
+    /* Mengubah tampilan scrollbar agar lebih elegan (untuk browser berbasis Chrome/Safari) */
+    scrollbar-width: thin;
+
+    
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
 
+.category-part_time {
+    background-color: #ffe5e5; 
+    border: 2px solid #ffb3b3;
+}
+
+.category-volunteer {
+    background-color: #e5ffe5; 
+    border: 2px solid #b3ffb3;
+}
+
+.category-internship {
+    background-color: #e5f2ff; 
+    border: 2px solid #b3d9ff;
+}
+
+.category-full_time {
+    background-color: #f3e5ff; 
+    border: 2px solid #d9b3ff;
+}
+
+.category-committee, .category-organization {
+    background-color: #f3e5ff;
+    border: 2px solid #d9b3ff;
+}
+
+/* Memperbaiki jarak teks dan tombol di dalam card */
 .experience-card {
-    padding: 1.25rem;
-    border: 3px solid var(--line);
-    border-radius: var(--radius);
+    flex: 0 0 350px; /* Lebar card dipaksa tetap 350px */
+    height: 420px; /* TINGGI TETAP UNTUK SEMUA CARD */
+    scroll-snap-align: start;
+    
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Sedikit bayangan agar lebih menonjol */
 }
 
-.experience-card-internship {
-    background-color: #56aee9;
-}
-
-.experience-card-research {
-    background-color: #f3f3a0;
-}
-
-.experience-card-volunteer {
-    background-color: #a8ffbc;
-}
-
-.experience-card-part-time {
-    background-color: #f7a6a6;
-}
-
-.experience-card-full-time {
-    background-color: #ffc2ff;
-}
-
-.experience-card-freelance {
-    background-color: #b6b5f7;
+.experience-description {
+    white-space: pre-line;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .experience-category {
-    color: var(--accent-dark);
     font-size: 0.75rem;
     font-weight: 700;
-    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    display: block;
+    opacity: 0.7; /* Sedikit transparan agar tidak menyaingi judul */
 }
 
-.experience-card h2 {
-    margin: 0.5rem 0;
+.experience-title {
+    margin: 0 0 1rem 0;
     font-size: 1.25rem;
+    line-height: 1.3;
+}
+
+.experience-content {
+    flex-grow: 1; /* Mendorong tombol ke bawah */
+    overflow-y: auto; /* Memunculkan scroll internal jika teks kepanjangan */
+    margin-bottom: 0.5rem;
+    padding-right: 0.5rem; /* Ruang bernapas untuk scrollbar */
+}
+
+.experience-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.experience-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 4px;
 }
 
 .experience-description,
@@ -390,10 +442,86 @@ h1, .brand{
     line-height: 1.4;
 }
 
-.project-form {
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.project-card {
+    background-color: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 480px; /* Tinggi seragam agar rapi sejajar */
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.project-image {
     width: 100%;
-    max-width: 100%;
-    margin-top: 1.5rem;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    background-color: #f8f9fa;
+}
+
+.project-title {
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem 0;
+    color: #222;
+}
+
+.project-tech-stack {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+/* Area deskripsi dengan scroll internal jika teks terlalu panjang */
+.project-description-container {
+    flex-grow: 1; /* Mendorong tombol aksi ke bawah */
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding-right: 4px;
+}
+
+.project-description-container::-webkit-scrollbar {
+    width: 4px;
+}
+.project-description-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 4px;
+}
+
+.project-description {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+    white-space: pre-line;
+}
+
+/* Bagian bawah card (Tombol Lihat Project & Hapus) */
+.project-card-actions {
+    margin-top: auto; 
+    padding-top: 0.75rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
 }
 
 .form-group {
@@ -429,6 +557,145 @@ h1, .brand{
     color: #b42318;
     font-size: 0.85rem;
     margin-top: 0.35rem;
+}
+
+/* =========================================
+   GLOBAL FORM & CARD STYLING (UNTUK SEMUA MODULE)
+   ========================================= */
+
+.form-section {
+    min-height: 80vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 2rem 0;
+}
+
+.form-card {
+    background-color: white; 
+    padding: 2.5rem; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    max-width: 600px; 
+    width: 100%;
+}
+
+.form-card h1 {
+    margin-top: 0; 
+    margin-bottom: 0.5rem; 
+    font-size: 1.8rem;
+}
+
+.form-card p.subtitle {
+    color: #666; 
+    margin-bottom: 2rem;
+}
+
+/* Merapikan tampilan form bawaan Django (as_p) */
+.django-form-fields p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+}
+
+.django-form-fields label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.django-form-fields input,
+.django-form-fields select,
+.django-form-fields textarea,
+.form-input-password {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.django-form-fields input:focus,
+.django-form-fields select:focus,
+.django-form-fields textarea:focus,
+.form-input-password:focus {
+    outline: none;
+    border-color: #a33b3b; 
+    box-shadow: 0 0 0 3px rgba(163, 59, 59, 0.1);
+}
+
+.django-form-fields textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* =========================================
+   MODAL DELETE STYLING
+   ========================================= */
+
+.delete-modal {
+    margin: auto; 
+    padding: 2rem;
+    border: none;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 400px; 
+    text-align: center;
+}
+
+.delete-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+.delete-modal p {
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.delete-modal .input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.delete-modal .input-group input:focus {
+    outline: none;
+    border-color: #a33b3b;
+}
+
+.delete-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Styling untuk kotak pesan error/sukses */
+.alert-message {
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid transparent;
+}
+
+.alert-error {
+    background-color: #ffe5e5;
+    color: #d63301;
+    border-left-color: #d63301;
+}
+
+.alert-success {
+    background-color: #e5ffe5;
+    color: #0f5132;
+    border-left-color: #0f5132;
 }
 
 .button {
@@ -539,76 +806,48 @@ h1, .brand{
     margin-top: 0;
 }
 
-.project-delete-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
+.delete-modal {
+    margin: auto;
+    padding: 2rem;
+    border: none;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    
+    width: 90%;
+    max-width: 400px; 
+    text-align: center;
+}
+
+.delete-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+.delete-modal p {
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.delete-modal .input-group input {
     width: 100%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-    margin: 0;
-    padding: 1rem;
-    border: 0;
-    background: transparent;
-    z-index: 10;
-    align-items: center;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.delete-modal .input-group input:focus {
+    outline: none;
+    border-color: #a33b3b;
+}
+
+.delete-modal-actions {
+    display: flex;
     justify-content: center;
-}
-
-.project-delete-modal:popover-open {
-    display: flex;
-}
-
-.project-delete-modal__backdrop {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    padding: 0;
-    background: rgba(28, 25, 23, 0.58);
-    cursor: default;
-}
-
-.project-delete-modal__content {
-    position: relative;
-    z-index: 1;
-    width: min(100%, 480px);
-    padding: 1.5rem;
-    background: var(--line);
-    border: 1px solid var(--accent);
-    border-radius: var(--radius);
-    box-shadow: 0 1rem 3rem rgba(150, 31, 15, 0.22);
-}
-
-.project-delete-modal__content h2 {
-    margin: 0 0 0.75rem;
-    font-family:
-        "Space Grotesk",
-        -apple-system,
-        sans-serif;
-    font-size: 1.5rem;
-}
-
-.project-delete-modal__close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    border: 0;
-    padding: 0;
-    background: transparent;
-    color: var(--text-muted);
-    font-size: 1.8rem;
-    line-height: 1;
-    cursor: pointer;
-}
-
-.project-delete-modal__actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
+    gap: 1rem;
 }
 
 .button-danger {
