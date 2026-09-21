@@ -125,3 +125,47 @@ Dalam pengerjaan proyek myportofolio (Tugas 2), sejauh ini saya memanfaatkan *Ge
 1.  **Styling & Layout:** AI saya gunakan untuk membantu memahami lebih lanjut fungsi dari suatu styling di CSS, misalnya "struktur seperti apa yang sebaiknya digunakan untuk membuat 3 kolom terpisah skill seperti section di notion".
 2.  **Iterative Debugging:** AI membantu saya dalam melakukan debugging, dengan log error spesifik seperti kegagalan assertion pada test case, untuk memahami akar masalah dan memperbaiki dengan tepat.
 3. **Refaktorisasi Templating**: Saran penerapan {% %} untuk memecah kolom kategori secara dinamis dan menampilkan display kategori sebagai header tanpa hard-code HTML.
+
+# Tugas 3
+**1. Alasan Menggunakan ModelForm dan *{% csrf_token %}***
+
+Karena `ModelForm` mempermudah pembuatan form Django yang terhubung langsung dengan model database model. Sehingga Django secara otomatis membaca tipe data dari field model dan melakukan validasi input pengguna tanpa perlu menulis logika validasi dari awal. Selain itu, form dapat langsung disimpan ke database menggunakan metode .save() tanpa perlu memetakan satu per satu atribut secara manual. Selain itu, `ModelForm` juga mengurangi risiko kesalahan (human error) dalam penulisan nama atribut input HTML, serta mencegah* mass assignment vulnerability* dengan membatasi field apa saja yang boleh diisi melalui *parameter fields* atau *exclude*.
+
+**Mengapa diwajibkan menambahkan *{% csrf_token %}* pada form?**
+
+Tag *{% csrf_token %}* digunakan untuk melindungi aplikasi web dari serangan *CSRF (Cross-Site Request Forgery)*, yang terjadi jika  pihak ketiga atau situs berbahaya menipu peramban pengguna yang sedang login untuk mengirimkan *request* berbahaya (seperti mengubah data atau menghapus akun) tanpa sepengetahuan pengguna. Dengan adanya token CSRF yang digenerate secara unik untuk setiap sesi pengguna, Django dapat memverifikasi bahwa *request* POST yang masuk benar-benar berasal dari halaman web aplikasi kita, bukan dari situs luar.
+
+**2. Mengapa JSON Lebih Disukai Dibandingkan XML dalam Pengembangan Web Modern?***
+
+JSON lebih ringan dan efisien ukurannya (JSON menggunakan sintaks berbasis objek yang bersih dan minim *closing tags* yang menjadikan ukuran file JSON jauh lebih kecil), sehingga penggunaan bandwidth lebih hemat dan kecepatan transfer data via jaringan menjadi lebih cepat.
+
+JSON juga memberi kemudahan *parsing* di sisi klien. Karena JSON pada dasarnya selaras dengan struktur objek JavaScript, browser dapat langsung membaca dan mengubah data JSON menjadi objek JavaScript dengan sangat cepat menggunakan `JSON.parse()`. Sebaliknya, XML memerlukan parser khusus (seperti DOM parser) yang lebih kompleks dan memakan sumber daya lebih besar.
+
+Terakhir, struktur data JSON menggunakan pasangan *key-value* dan *array* yang sangat intuitif bagi pengembang modern untuk dibaca maupun diintegrasikan ke RESTful API.
+
+**3. Alur Fungsi View Mengembalikan Data dalam Bentuk JSON & Alasan Serialization***
+
+Alur saat fungsi view mengembalikan data portofolio dalam bentuk JSON:
+
+* Pengguna mengirimkan *request* ke endpoint URL tertentu (misalnya */api/project*).
+* Fungsi `view` di Django menerima request tersebut dan melakukan query ke *database* untuk mengambil data project.
+* Data diterima dalam bentuk objek model Django (*QuerySet* atau *Model Instance*) yang tidak bisa dibaca langsung oleh protokol HTTP/JavaScript dalam format mentah.
+* Data diubah ke fdalam format standar (JSON) melalui proses serialisasi.
+* Fungsi view mengembalikan respons menggunakan modul khusus Django (seperti `JsonResponse` atau `HttpResponse` dengan *content type application/json*).
+
+Oleh karena itu, serialisasi wajib dilakukan untuk menerjemahkan objek mentah Python/Django yang kompleks tersebut menjadi format teks standar (JSON) yang dapat dikirim melalui jaringan dan mudah dipahami oleh sistem atau frontend lain. Karena objek model Django adalah representasi objek Python bersarang yang kompleks dan terhubung langsung dengan mesin database (berisi metode, metadata, dan tipe data khusus Python), sementara protokol transmisi web seperti HTTP hanya dapat mengirimkan aliran data berupa teks mentah (seperti string JSON atau XML).
+
+**AI Disclosure & Manual Refinement**
+
+Dalam pengerjaan proyek myportofolio (Tugas 3), sejauh ini saya memanfaatkan *Generative AI* sebagai pendiskusi teknis. Saya tetap melakukan intervensi teknis dan keputusan secara manual:
+
+1.  **Penyusunan Struktur Kode Awal (Boilerplate & CSS):** AI membantu menghasilkan kerangka dasar HTML, konfigurasi Carousel layout untuk halaman Experience, serta struktur dasar agar sesuai dengan standar konvensi Django.
+2.  **Iterative Debugging:** AI membantu saya dalam melakukan debugging ketika terjadi kesalahan pada template rendering dan error testcase.
+3. **Perumusan Konsep Logika**: AI memberikan rekomendasi penerapan properti Python seperti @property pada model untuk menentukan status aktif suatu pengalaman (`is_ongoing`) setelah perubahan `models.py`.
+
+Meskipun membantu, AI memiliki beberapa keterbatasan nyata yang ditemukan selama proses pengembangan, seperti tidak konsistennya penamaan variabel, kurangnya penjelasan atau konteks mendalam/spesifik, dan *edge cases*. Untuk memastikan aplikasi tetap berjalan stabil, saya melakukan koreksi sintaks dan validasi model, penyempurnaan logika properti model, serta penyesuaian antarmuka dan styling css.
+
+**Lampiran prompt:**
+1. "Environment: Request Method: GET Request URL: http://localhost:8000/project ... [lampirkan traceback error TemplateDoesNotExist atau TypeError] ... Masih ada 2 error & failed, tolong bantu periksa celah yang menyebabkan masalah tersebut dan jelaskan dengan detail."
+2. "Sepertinya logika pengecekan status selesai atau tidak masih salah deh, soalnya experience yg baru aku masukkan saja salah. Sepertinya karena ended_at tidak aku kosongin, sementara def is_ongoing(self): return self.ended_at is None. Tapi aku isi tanggal di masa depan, harusnya pengecekan logika mengcover hal ini, bagaimana mengecek untuk tipe data Datetime sekarang"
+3. "Bagaimana struktur HTML dan CSS menggunakan tata letak grid yang tampilannya responsif, rapi, dan kartu-kartunya memiliki tinggi yang seragam""
