@@ -1,43 +1,71 @@
 {% extends "base.html" %}
 {% block meta %}
-    <title>Projects - {{ name }}</title>
+    <title>Skills - {{ name }}</title>
 {% endblock meta %}
 {% block content %}
     <main>
     {% load static %}
     <section class="skill-section" id="skill">
         <div class="container">
-            <h1>Skills</h1>
             <p class="section-kicker">Beberapa keahlian terkait</p>
+            
+            <div class="project-header">
+                <h1>Skills</h1>
+                <a href="{% url 'main:create_skill' %}"
+                   class="button project-add-button">
+                    <span aria-hidden="true">+</span>
+                    Tambah Skill
+                </a>
+            </div>
+
+            <form method="get"
+                  action="{% url 'main:show_skill' %}"
+                  class="project-search">
+                <input type="search"
+                       name="name" 
+                       value="{{ name_query }}"
+                       placeholder="Cari berdasarkan nama skill"
+                       class="project-search__input"
+                       aria-label="Cari berdasarkan nama skill">
+                <button type="submit" class="button">Cari</button>
+            </form>
 
             <div class="skill-board">
-
                 {% regroup skill_list by get_category_display as grouped_skill_list %}
 
                 {% for group in grouped_skill_list %}
                     <div class="skill-column">
                         <div class="skill-column-header">{{ group.grouper }}</div>
+                        
                         {% for skill in group.list %}
                             <article class="skill-card">
-                                {% if skill.image_path %}
-                                    <img src="{% static skill.image_path %}" alt="{{ skill.name }}" class="skill-icon">
+                                {% if skill.skill_image_url %}
+                                    <img src="{{ skill.skill_image_url }}" alt="{{ skill.name }}" class="skill-icon">
                                 {% endif %}
                                 <div class="skill-info">
                                     <h3 class="skill-name">{{ skill.name }}</h3>
                                     <p class="skill-desc">{{ skill.description }}</p>
                                     <span class="skill-level">{{ skill.get_level_display }}</span>
+                                    
+                                    <div class="project-card-actions" style="margin-top: 1rem;">
+                                        <div class="project-actions">
+                                            {% include "components\skill_delete_modal.html" with skill=skill %}
+                                        </div>
+                                    </div>
                                 </div>
                             </article>
                         {% endfor %}
                     </div>
 
                 {% empty %}
-                    <p class="empty-state">Belum ada keahlian yang ditambahkan.</p>
+                    {% if name_query %}
+                        <p class="empty-state" style="width: 100%;">Tidak ada skill dengan nama tersebut.</p>
+                    {% else %}
+                        <p class="empty-state" style="width: 100%;">Belum ada keahlian yang ditambahkan.</p>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
     </section>
     </main>
-</body>
-</html>
 {% endblock content %}

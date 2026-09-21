@@ -1,20 +1,21 @@
 import uuid
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Experience(models.Model):
     EXPERIENCE_CHOICES = [
         ('internship', 'Internship'),
-        ('research', 'Research'),
         ('volunteer', 'Volunteer'),
         ('part-time', 'Part-Time'),
         ('full-time', 'Full-Time'),
-        ('freelance', 'Freelance'),
+        ('organization', 'Organization'),
+        ('committee', 'Committee')
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    category = models.CharField(max_length=20, choices=EXPERIENCE_CHOICES, default='full-time')
+    category = models.CharField(max_length=20, choices=EXPERIENCE_CHOICES, default='commitee')
     thumbnail = models.URLField(blank=True, null=True)
     started_at = models.DateTimeField(auto_now_add=True)
     ended_at = models.DateTimeField(blank=True, null=True)
@@ -32,18 +33,12 @@ class Skill(models.Model):
         ('tools', 'Tools & Platforms')
     ]
 
-    LEVEL_CHOICES = [
-        ('familiar', 'Familiar'),
-        ('proficient', 'Proficient'),
-        ('advanced', 'Advanced'),
-    ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     description = models.TextField()
     category = models.CharField(max_length=20, choices=SKILL_CHOICES, default='tools')
-    level = models.CharField(max_length=20, choices=LEVEL_CHOICES, default='proficient')
-    image_path = models.CharField(max_length=255, blank=True, null=True)
+    nilai = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)], default=50)
+    skill_image_url = models.URLField(blank=True, max_length=500)
     def __str__(self):
         return self.name
 

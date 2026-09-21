@@ -1,6 +1,5 @@
-from django.forms import ModelForm, TextInput, Textarea, URLInput
-
-from main.models import Project
+from django.forms import ModelForm, TextInput, Textarea, URLInput, Select, NumberInput
+from main.models import Project, Skill
 
 class ProjectForm(ModelForm):
     class Meta:
@@ -30,7 +29,7 @@ class ProjectForm(ModelForm):
             ),
             "description": Textarea(
                 attrs={
-                    "placeholder": "Ceritakan Proyekmu",
+                    "placeholder": "Ceritakan Tentang Proyekmu",
                     "rows": 3,
                 }
             ),
@@ -45,6 +44,55 @@ class ProjectForm(ModelForm):
                 }
             ),
             "project_image_url": URLInput(
+                attrs={
+                    "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
+                }
+            ),
+        }
+
+class SkillForm(ModelForm):
+    class Meta:
+        model = Skill
+        fields = [
+            "name",
+            "description",
+            "category",
+            "nilai",
+            "skill_image_url",
+        ]
+
+        labels = {
+            "name": "Nama skill",
+            "description": "Deskripsi skill",
+            "category": "Kategori skill",
+            "nilai": "Tingkat keahlian dalam skala 1-100",
+            "skill_image_url": "URL gambar terkait skill",
+        }
+
+        widgets = {
+            "name": TextInput(
+                attrs={
+                    "placeholder": "Python",
+                    "maxlength": 100,
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Ceritakan Tentang Skillmu",
+                    "rows": 3,
+                }
+            ),
+            "category": Select(
+                attrs={'class': 'form-select'}
+            ),
+            "nilai": NumberInput(attrs={
+                "type": "range",               
+                "class": "form-range",         
+                "min": "1",
+                "max": "100",
+                "step": "5",                   
+            }),
+            "skill_image_url": URLInput(
                 attrs={
                     "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
                 }
