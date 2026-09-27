@@ -59,7 +59,11 @@ Buka peramban dan akses alamat http://localhost:8000/.
 | **1** | 24 - 30 Aug 2026 | Setup Git repository, Django Installation | - |
 | **2** | 31 Aug - 06 Sep 2026 | Setup HTML kerangka dasar dan penyusunan section *Hero* | Localhost sempat tidak merespons perubahan pada *style.css*. Solusi: melakukan reset server/koneksi hingga terupdate|
 | **3** | 07 - 13 Sep 2026 | Penyusunan section *Experience* | Penggunaan layout carousel horizontal untuk section *Experience* menyebabkan perbedaan tinggi tiap *card*. Solusi: Menerapkan layout grid. |
+<<<<<<< HEAD
 | **4** | 14 - 18 Sep 2026 | Penyusunan section *Skill* dengan implementasi MVT, navigasi *footer*, unit testing *Skill* | - |
+=======
+| **4** | 14 Sep 2026 | Penyusunan section *Skill* dengan implementasi MVT, navigasi *footer*, unit testing *Skill* | - |
+>>>>>>> 1deba343015be97c311f6725901802240dd37c4b
 | **5** | 21  Sep 2026 | Penyusunan section *Skill, Experience, Project* dengan implementasi *Form & Data Delivery* | - |
 ---
 
@@ -169,4 +173,8 @@ Meskipun membantu, AI memiliki beberapa keterbatasan nyata yang ditemukan selama
 **Lampiran prompt:**
 1. "Environment: Request Method: GET Request URL: http://localhost:8000/project ... [lampirkan traceback error TemplateDoesNotExist atau TypeError] ... Masih ada 2 error & failed, tolong bantu periksa celah yang menyebabkan masalah tersebut dan jelaskan dengan detail."
 2. "Sepertinya logika pengecekan status selesai atau tidak masih salah deh, soalnya experience yg baru aku masukkan saja salah. Sepertinya karena ended_at tidak aku kosongin, sementara def is_ongoing(self): return self.ended_at is None. Tapi aku isi tanggal di masa depan, harusnya pengecekan logika mengcover hal ini, bagaimana mengecek untuk tipe data Datetime sekarang"
+<<<<<<< HEAD
 3. "Bagaimana struktur HTML dan CSS menggunakan tata letak grid yang tampilannya responsif, rapi, dan kartu-kartunya memiliki tinggi yang seragam""
+=======
+3. "Bagaimana struktur HTML dan CSS menggunakan tata letak grid yang tampilannya responsif, rapi, dan kartu-kartunya memiliki tinggi yang seragam""
+>>>>>>> 1deba343015be97c311f6725901802240dd37c4b
