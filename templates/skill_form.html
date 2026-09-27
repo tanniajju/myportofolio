@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block meta %}
-    <title>Add Skill - {{ name }}</title>
+    <title>{% if skill %}Update Skill - {{ name }}{% else %}Tambah Skill - {{ name }}{% endif %}</title>
 {% endblock meta %}
 {% block content %}
 <main>
@@ -8,7 +8,7 @@
         <div class="container">
             <div class="form-card">
                 
-                <h1>Tambah Skill Baru</h1>
+                <h1>{% if skill %}Update Skill{% else %}Tambah Skill{% endif %}</h1>
                 <p class="subtitle">Masukkan detail keahlian terbarumu.</p>
                 
                 <!-- Blok Pesan Error / Sukses -->
@@ -46,7 +46,7 @@
                     <!-- Tombol Aksi -->
                     <div style="display: flex; gap: 1rem; margin-top: 2rem;">
                         <button type="submit" class="button" style="flex: 1; justify-content: center;">
-                            Tambah Data
+                            {% if skill %}Simpan Perubahan{% else %}Tambah Data{% endif %}
                         </button>
                         <a href="{% url 'main:show_skill' %}" class="button button-secondary" style="flex: 1; text-align: center;">
                             Batal

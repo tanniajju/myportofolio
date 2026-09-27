@@ -33,7 +33,32 @@ def create_experience(request):
         else:
             messages.error(request, "Kode rahasia salah! Gagal menambahkan data.")
             
-    context = {"form": form}
+    context = {
+        "name": "Tania Ju",
+        "form": form,
+        }
+    return render(request, "experience_form.html", context)
+
+def update_experience(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+    form = ExperienceForm(request.POST or None, instance=experience)
+
+    if request.method == "POST":
+        input_kode = request.POST.get('secret_code')
+
+        if input_kode == PASSWORD:
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Experience berhasil diperbarui!")
+                return redirect("main:show_experience")
+        else:
+            messages.error(request, "Kode rahasia salah! Gagal memperbarui data.")
+
+    context = {
+        "name": "Tania Ju",
+        "form": form, 
+        "experience": experience
+    }
     return render(request, "experience_form.html", context)
 
 def show_experience(request):
@@ -88,6 +113,28 @@ def create_project(request):
     }
     return render(request, "projects_form.html", context)
 
+def update_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    form = ProjectForm(request.POST or None, instance=project)
+
+    if request.method == "POST" and form.is_valid():
+        input_kode = request.POST.get('secret_code')
+
+        if input_kode == PASSWORD:
+            form.save()
+            messages.success(request, "Project berhasil diperbarui!")
+            return redirect("main:show_project")
+        else:
+            messages.error(request, "Kode rahasia salah! Gagal memperbarui data.")
+
+    context = {
+        ""
+        "name": "Tania Ju", 
+        "form": form, 
+        "project": project
+    }
+    return render(request, "projects_form.html", context)
+
 def show_project(request):
     json_response = get_projects_json(request)
 
@@ -139,6 +186,28 @@ def create_skill(request):
             messages.error(request, "Password salah! Gagal menambahkan skill.")
             
     context = {"form": form}
+    return render(request, "skill_form.html", context)
+
+def update_skill(request, skill_id):
+    skill = get_object_or_404(Skill, pk=skill_id)
+    form = SkillForm(request.POST or None, instance=skill)
+
+    if request.method == "POST":
+        input_kode = request.POST.get('secret_code')
+
+        if input_kode == PASSWORD:
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Skill berhasil diperbarui!")
+                return redirect("main:show_skill")
+        else:
+            messages.error(request, "Kode rahasia salah! Gagal memperbarui skill.")
+
+    context = {
+        "name": "Tania Ju",
+        "form": form, 
+        "skill": skill
+    }
     return render(request, "skill_form.html", context)
 
 def show_skill(request):

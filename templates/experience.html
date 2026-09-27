@@ -63,9 +63,9 @@
                             
                             <div class="project-card-actions" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
 
-                                <!-- Modal Hapus -->
                                 <div class="project-actions">
                                     {% include "components/experience_delete_modal.html" with experience=exp %}
+                                    <a href="{% url 'main:update_experience' exp.id %}" class="button">Edit</a>
                                 </div>
                             </div>
                         </article>
