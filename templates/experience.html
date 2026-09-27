@@ -9,12 +9,14 @@
                 <p class="section-kicker">Perjalanan saya sejauh ini</p>
                 
                 <!-- Header & Tombol Tambah -->
-                <div class="project-header">
-                    <h1>Experience</h1>
-                    <a href="{% url 'main:create_experience' %}" class="button project-add-button">
-                        <span aria-hidden="true">+</span> Tambah Experience
-                    </a>
-                </div>
+                {% if user.is_superuser %}
+                    <div class="project-header">
+                        <h1>Experience</h1>
+                        <a href="{% url 'main:create_experience' %}" class="button project-add-button">
+                            <span aria-hidden="true">+</span> Tambah Experience
+                        </a>
+                    </div>
+                {% endif %}
 
                 <!-- Form Pencarian -->
                 <form method="get" action="{% url 'main:show_experience' %}" class="project-search">
@@ -64,8 +66,10 @@
                             <div class="project-card-actions" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
 
                                 <div class="project-actions">
-                                    {% include "components/experience_delete_modal.html" with experience=exp %}
-                                    <a href="{% url 'main:update_experience' exp.id %}" class="button">Edit</a>
+                                    {% if user.is_superuser %}
+                                        {% include "components/experience_delete_modal.html" with experience=exp %}
+                                        <a href="{% url 'main:update_experience' exp.id %}" class="button">Edit</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </article>
