@@ -9,12 +9,14 @@
                 <p class="section-kicker">Karya yang saya bangun</p>
                 
                 <!-- Header & Tombol Tambah -->
-                <div class="project-header">
-                    <h1>Projects</h1>
-                    <a href="{% url 'main:create_project' %}" class="button project-add-button">
-                        <span aria-hidden="true">+</span> Tambah Proyek
-                    </a>
-                </div>
+                 {% if user.is_superuser %}
+                    <div class="project-header">
+                        <h1>Projects</h1>
+                        <a href="{% url 'main:create_project' %}" class="button project-add-button">
+                            <span aria-hidden="true">+</span> Tambah Proyek
+                        </a>
+                    </div>
+                {% endif %}
 
                 <!-- Blok Notifikasi Pesan -->
                 {% if messages %}
@@ -62,9 +64,13 @@
                                 {% if project.project_url %}
                                     <a href="{{ project.project_url }}" class="button" target="_blank" style="flex: 1; text-align: center; justify-content: center;">Lihat Project</a>
                                 {% endif %}
-                                
-                                {% include "components/project_delete_modal.html" with project=project %}
-                                <a href="{% url 'main:update_project' project.id %}" class="button">Edit</a>
+
+
+                                {% include "components/project_star.html" with project=project %}
+                                {% if user.is_superuser %}
+                                    {% include "components/project_delete_modal.html" with project=project %}
+                                    <a href="{% url 'main:update_project' project.id %}" class="button">Edit</a>
+                                {% endif %}
                             </div>
 
                         </article>

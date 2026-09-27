@@ -1,4 +1,5 @@
 import uuid
+from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
@@ -20,6 +21,10 @@ class Experience(models.Model):
     thumbnail = models.URLField(blank=True, null=True)
     started_at = models.DateField(default=timezone.now)
     ended_at = models.DateField(blank=True, null=True)
+    starred_by = models.ManyToManyField(
+        User, related_name="starred_experiences", blank=True
+    )
+
     def __str__(self):
         return self.title
 
@@ -40,6 +45,10 @@ class Skill(models.Model):
     category = models.CharField(max_length=20, choices=SKILL_CHOICES, default='tools')
     nilai = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)], default=50)
     skill_image_url = models.URLField(blank=True, max_length=500)
+    starred_by = models.ManyToManyField(
+        User, related_name="starred_skills", blank=True
+    )
+
     def __str__(self):
         return self.name
 
@@ -51,6 +60,9 @@ class Project(models.Model):
     tech_stack = models.CharField(max_length=255)
     project_url = models.URLField(blank=True)
     project_image_url = models.URLField(blank=True, max_length=500)
+    starred_by = models.ManyToManyField(
+        User, related_name="starred_projects", blank=True
+    )
 
     def __str__(self):
         return self.title
