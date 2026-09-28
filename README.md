@@ -59,8 +59,9 @@ Buka peramban dan akses alamat http://localhost:8000/.
 | **1** | 24 - 30 Aug 2026 | Setup Git repository, Django Installation | - |
 | **2** | 31 Aug - 06 Sep 2026 | Setup HTML kerangka dasar dan penyusunan section *Hero* | Localhost sempat tidak merespons perubahan pada *style.css*. Solusi: melakukan reset server/koneksi hingga terupdate|
 | **3** | 07 - 13 Sep 2026 | Penyusunan section *Experience* | Penggunaan layout carousel horizontal untuk section *Experience* menyebabkan perbedaan tinggi tiap *card*. Solusi: Menerapkan layout grid. |
-| **4** | 14 Sep 2026 | Penyusunan section *Skill* dengan implementasi MVT, navigasi *footer*, unit testing *Skill* | - |
-| **5** | 21  Sep 2026 | Penyusunan section *Skill, Experience, Project* dengan implementasi *Form & Data Delivery* | - |
+| **4** | 14 - 18 Sep 2026 | Penyusunan section *Skill* dengan implementasi MVT, navigasi *footer*, unit testing *Skill* | - |
+| **5** | 21 - 15 Sep 2026 | Penyusunan section *Skill, Experience, Project* dengan implementasi *Form & Data Delivery* | - |
+| **6** | 28 Sep 2026 | Penerapan Autentikasi, Session, dan Cookie | - |
 ---
 
 # Tugas 1
@@ -170,3 +171,30 @@ Meskipun membantu, AI memiliki beberapa keterbatasan nyata yang ditemukan selama
 1. "Environment: Request Method: GET Request URL: http://localhost:8000/project ... [lampirkan traceback error TemplateDoesNotExist atau TypeError] ... Masih ada 2 error & failed, tolong bantu periksa celah yang menyebabkan masalah tersebut dan jelaskan dengan detail."
 2. "Sepertinya logika pengecekan status selesai atau tidak masih salah deh, soalnya experience yg baru aku masukkan saja salah. Sepertinya karena ended_at tidak aku kosongin, sementara def is_ongoing(self): return self.ended_at is None. Tapi aku isi tanggal di masa depan, harusnya pengecekan logika mengcover hal ini, bagaimana mengecek untuk tipe data Datetime sekarang"
 3. "Bagaimana struktur HTML dan CSS menggunakan tata letak grid yang tampilannya responsif, rapi, dan kartu-kartunya memiliki tinggi yang seragam""
+
+# Tugas 4
+Pada Tugas 4, diterapkan pola autentikasi dan otorisasi karena aplikasi portofolio memuat data yang merepresentasikan identitas dan karya pemiliknya, sehingga tidak boleh dapat diubah atau dihapus oleh sembarang orang. Autentikasi memastikan siapa yang sedang mengakses aplikasi, sedangkan otorisasi membatasi apa saja yang boleh dilakukan setelah identitas tersebut diketahui. Pembagian hak akses dilakukan berdasarkan peran dengan prinsip *least privilege*, yaitu setiap pengguna hanya memperoleh hak sesuai kebutuhannya. Dengan demikian, pemilik tetap memegang kendali penuh atas portofolionya, tetapi pengelolaan data menjadi lebih fleksibel dan aman.
+
+### Ringkasan hak akses per peran
+
+| Peran | Baca | Star / Unstar | Ubah | Buat | Hapus |
+|---|---|---|---|---|---|
+| Guest | ✔ | ✘ (wajib login) | ✘ | ✘ | ✘ |
+| Logged in User | ✔ | ✔ | ✘ | ✘ | ✘ |
+| Editor | ✔ | ✔ | ✔ | ✘ | ✘ |
+| Pemilik (superuser) | ✔ | ✔ | ✔ | ✔ | ✔ |
+
+**AI Disclosure & Manual Refinement**
+
+Dalam pengerjaan proyek myportofolio (Tugas 4), sejauh ini saya memanfaatkan *Generative AI* sebagai pendiskusi teknis. Saya tetap melakukan intervensi teknis dan keputusan secara manual:
+
+1.  **Faktorisasi fungsi untuk menyesuaikan struktur pemanggilan skill:** Karena bagian skill menggunakan pemanggilan grouping khusus, penambahan tombol star perlu disesuaikan dengan cara yang berbeda. Untuk itu, AI membantu menghasilkan kerangka konfigurasi untuk halaman Skill, serta struktur dasar agar sesuai dengan standar konvensi Django.
+2.  **Iterative Debugging:** AI membantu saya dalam melakukan debugging ketika terjadi kesalahan pada template rendering dan error testcase.
+3. **Membantu performatan Readme:** AI membantu saya dalam membuat format table readme (pembagian hak peran) secara cepat agar readme lebih readable
+
+**Lampiran prompt:**
+1. *pasted error code*, kenapa terjadi error demikian? Berikan opsi perbaikan terbaik dan penjelasannya
+2. Bagaimana menerapkan fitur star pada section skill dengan tidak merusak struktur grouping dan filter untuk pencarian dan penampilan header berdasarkan kategori?
+3. Berdasarkan *pasted penjelasan peran di perintah tugas*, buat struktur table untuk readme yang sederhana dan mudah dibaca.
+
+
