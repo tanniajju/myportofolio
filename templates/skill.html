@@ -66,7 +66,7 @@
                                             {% if user.is_superuser %}
                                                 {% include "components/skill_delete_modal.html" with skill=skill %}
                                             {% endif %}
-                                            {% if perms.main.change_project %}
+                                            {% if perms.main.change_skill %}
                                                 <a href="{% url 'main:update_skill' skill.id %}" class="button">Edit</a>
                                             {% endif %}
                                         </div>

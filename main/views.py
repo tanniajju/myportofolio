@@ -283,11 +283,16 @@ def show_skill(request):
         json_response.content.decode("utf-8"),
     )
     skills = [skill.object for skill in skills]
+    
     name_query = request.GET.get("name", "").strip()
+    skill_list = Skill.objects.all()
+    if name_query:
+        skill_list = skill_list.filter(name__icontains=name_query)
+    skill_list = skill_list.order_by("category", "name") 
 
     context = {
         "name": "Tania Ju",
-        "skill_list": skills,
+        "skill_list": skill_list,
         "name_query": name_query,
     }
     return render(request, "skill.html", context)
