@@ -11,7 +11,7 @@ urlpatterns = [
     path('delete_experience/<uuid:experience_id>/', delete_experience, name='delete_experience'),
     path("skill/", show_skill, name="show_skill"),
     path("skill/add/", create_skill, name="create_skill"),
-    path("api/skill/", get_skills_json, name="get_projects_json"),
+    path("api/skill/", get_skills_json, name="get_skills_json"),
     path('delete_skill/<uuid:skill_id>/', delete_skill, name='delete_skill'),
     path("project", show_project, name="show_project"),
     path("project/add/", create_project, name="create_project"),
@@ -25,7 +25,17 @@ urlpatterns = [
     path("logout/", logout_user, name="logout"),
     path(
         "projects/<uuid:project_id>/star/",
-        toggle_star,
-        name="toggle_star",
+        toggle_star_project,
+        name="toggle_star_project",
     ),
-]
+    path(
+            "experience/<uuid:experience_id>/star/",
+            toggle_star_experience,
+            name="toggle_star_experience",
+        ),
+    path(
+                "skill/<uuid:skill_id>/star/",
+                toggle_star_skill,
+                name="toggle_star_skill",
+            ),
+    ]

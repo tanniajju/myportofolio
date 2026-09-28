@@ -66,8 +66,11 @@
                             <div class="project-card-actions" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
 
                                 <div class="project-actions">
+                                    {% include "components/experience_star.html" with experience=exp %}
                                     {% if user.is_superuser %}
                                         {% include "components/experience_delete_modal.html" with experience=exp %}
+                                    {% endif %}
+                                    {% if perms.main.change_experience %}
                                         <a href="{% url 'main:update_experience' exp.id %}" class="button">Edit</a>
                                     {% endif %}
                                 </div>
