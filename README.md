@@ -179,7 +179,7 @@ Pada Tugas 4, diterapkan pola autentikasi dan otorisasi karena aplikasi portofol
 
 | Peran | Baca | Star / Unstar | Ubah | Buat | Hapus |
 |---|---|---|---|---|---|
-| Guest | ✔ | ✘ (wajib login) | ✘ | ✘ | ✘ |
+| Guest | ✔ | ✘ | ✘ | ✘ | ✘ |
 | Logged in User | ✔ | ✔ | ✘ | ✘ | ✘ |
 | Editor | ✔ | ✔ | ✔ | ✘ | ✘ |
 | Pemilik (superuser) | ✔ | ✔ | ✔ | ✔ | ✔ |
