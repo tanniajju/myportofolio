@@ -38,4 +38,6 @@ urlpatterns = [
                 toggle_star_skill,
                 name="toggle_star_skill",
             ),
+    path("projects/add-ajax/", create_project_ajax, name="create_project_ajax"),
     ]
+    
