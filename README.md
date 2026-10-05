@@ -61,7 +61,8 @@ Buka peramban dan akses alamat http://localhost:8000/.
 | **3** | 07 - 13 Sep 2026 | Penyusunan section *Experience* | Penggunaan layout carousel horizontal untuk section *Experience* menyebabkan perbedaan tinggi tiap *card*. Solusi: Menerapkan layout grid. |
 | **4** | 14 - 18 Sep 2026 | Penyusunan section *Skill* dengan implementasi MVT, navigasi *footer*, unit testing *Skill* | - |
 | **5** | 21 - 15 Sep 2026 | Penyusunan section *Skill, Experience, Project* dengan implementasi *Form & Data Delivery* | - |
-| **6** | 28 Sep 2026 | Penerapan Autentikasi, Session, dan Cookie | - |
+| **6** | 28 Sep - 02 Okt 2026 | Penerapan Autentikasi, Session, dan Cookie | - |
+| **7** | 05 Okt 2026 | Penerapan Web Interactivity with JavaScript | Terdapat 2 section yang dapat dikerjakan pada tugas 3 & 4, untuk pengerjaan tugas 5, saya memilih implementasinya di Experience |
 ---
 
 # Tugas 1
@@ -197,4 +198,64 @@ Dalam pengerjaan proyek myportofolio (Tugas 4), sejauh ini saya memanfaatkan *Ge
 2. Bagaimana menerapkan fitur star pada section skill dengan tidak merusak struktur grouping dan filter untuk pencarian dan penampilan header berdasarkan kategori?
 3. Berdasarkan *pasted penjelasan peran di perintah tugas*, buat struktur table untuk readme yang sederhana dan mudah dibaca.
 
+# Tugas 5
+**1. Apa itu debouncing dan mengapa penting diterapkan pada fitur pencarian AJAX**
 
+Debouncing adalah teknik untuk menunda eksekusi suatu fungsi sampai pengguna berhenti melakukan suatu aktivitas selama waktu tertentu. Pada fitur pencarian, debouncing digunakan agar request AJAX tidak dikirim setiap kali pengguna mengetik satu karakter.
+
+Misalnya, ketika pengguna mengetik `portfolio`, tanpa debouncing dapat terjadi banyak request seperti:
+
+- `p`
+- `po`
+- `por`
+- `port`
+- `portf`
+- `portfo`
+- `portfol`
+- `portfoli`
+- `portfolio`
+
+Dengan debouncing, request hanya dikirim setelah pengguna berhenti mengetik selama waktu yang telah ditentukan.
+
+Teknik ini penting karena dapat mengurangi jumlah request ke server, mengurangi beban server, dan membuat fitur pencarian menjadi lebih efisien serta responsif.
+
+**2. Fungsi penggunaan 'await' ketika menggunakan 'fetch()**
+`fetch()` digunakan untuk mengirim request HTTP dan mengambil data dari server. Karena proses tersebut berjalan secara asynchronous, `fetch()` menghasilkan sebuah `Promise`.
+
+`await` digunakan untuk menunggu sampai `Promise` tersebut selesai sebelum program melanjutkan ke baris berikutnya. Dengan demikian, kita dapat memperoleh hasil response dari server dan kemudian memprosesnya.
+
+Contohnya:
+
+```js
+const response = await fetch(endpoint);
+const data = await response.json();
+```
+
+Pada kode tersebut, program menunggu sampai request selesai sebelum melanjutkan ke response.json().
+Jika tidak menggunakan await, kita akan mendapatkan Promise, bukan hasil response secara langsung. Akibatnya, kita tidak dapat langsung menggunakan hasil tersebut sebagai response atau data yang dikirim oleh server.
+
+**3. Serangan XSS (Cross-Site Scripting) dan alasan data AJAX/JavaScript lebih rentan**
+XSS (Cross-Site Scripting) adalah serangan dengan cara menyisipkan kode JavaScript berbahaya ke dalam data yang kemudian ditampilkan atau dieksekusi oleh browser pengguna.
+
+Data yang ditampilkan langsung melalui template Django relatif lebih aman karena Django secara otomatis melakukan HTML escaping pada nilai yang dirender melalui template. Contohnya, karakter seperti `<` dan `>` akan diubah sehingga tidak dianggap sebagai tag HTML atau kode yang dapat dieksekusi.
+
+Sebaliknya, ketika data dari endpoint AJAX dimasukkan ke halaman menggunakan JavaScript, terutama melalui innerHTML, Django tidak melakukan escaping terhadap data tersebut. JavaScript memasukkan data langsung ke HTML sehingga data yang mengandung HTML atau JavaScript berbahaya dapat dieksekusi oleh browser.
+
+Oleh karena itu, pada implementasi AJAX, setiap nilai teks yang dimasukkan ke HTML harus di-escape terlebih dahulu, misalnya menggunakan fungsi `escapeHtml()`, atau menggunakan `textContent` ketika memungkinkan. Selain itu, input teks juga dibersihkan di sisi server menggunakan `strip_tags` pada ModelForm sebagai lapisan perlindungan tambahan.
+
+**AI Disclosure & Manual Refinement**
+
+Dalam pengerjaan proyek `myportofolio` (Tugas 5), saya menggunakan **Generative AI** sebagai pendiskusi teknis untuk memahami requirement, menentukan tahapan pengerjaan yang efektif, serta membantu debugging. Keputusan akhir dan penyesuaian kode tetap saya lakukan secara manual:
+
+1. **Perencanaan tahapan AJAX:** AI membantu saya menentukan urutan pengerjaan yang paling efektif, mulai dari endpoint JSON, AJAX GET, debouncing, modal dan AJAX POST, hingga CSRF, toast notification, dan XSS protection.
+
+2. **Iterative Debugging:** AI membantu menganalisis error pada Django, JavaScript, dan template berdasarkan kode serta error yang saya berikan. Saya kemudian menguji dan menyesuaikan solusi tersebut dengan struktur proyek.
+
+3. **Requirement Checking:** AI membantu mengecek implementasi berdasarkan checklist tugas untuk memastikan fitur seperti loading/empty/error state, permission, HTTP status code, debouncing, dan XSS protection telah terpenuhi.
+
+4. **Manual Refinement:** Beberapa saran AI tidak langsung digunakan. Saya menyesuaikan atau menghilangkan perubahan yang tidak diperlukan agar implementasi tetap sederhana dan sesuai dengan struktur proyek serta requirement tugas.
+
+**Lampiran prompt:**
+1. *Pasted requirement tugas*, bantu tentukan tahapan pengerjaan yang paling efektif dan efisien.
+2. *Pasted kode dan error*, kenapa terjadi error ini dan apa perbaikan yang paling sesuai dengan struktur proyek?
+3. Berdasarkan checklist tugas, bantu cek apakah implementasi AJAX, debouncing, modal, CSRF, toast, dan XSS sudah terpenuhi.
