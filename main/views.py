@@ -81,7 +81,7 @@ def create_experience(request):
     
     return render(request, "experience_form.html", context)
 
-@permission_required('main.change_project', raise_exception=True)
+@permission_required('main.update_experience', raise_exception=True)
 def update_experience(request, experience_id):
     experience = get_object_or_404(Experience, pk=experience_id)
     form = ExperienceForm(request.POST or None, instance=experience)
@@ -254,7 +254,7 @@ def create_skill(request):
         }
     return render(request, "skill_form.html", context)
 
-@permission_required('main.change_project', raise_exception=True)
+@permission_required('main.change_skill', raise_exception=True)
 def update_skill(request, skill_id):
     skill = get_object_or_404(Skill, pk=skill_id)
     form = SkillForm(request.POST or None, instance=skill)
