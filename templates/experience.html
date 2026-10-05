@@ -14,7 +14,7 @@
                         <h1>Experience</h1>
                         <button type="button"
                                 class="button project-add-button"
-                                popovertarget="add-project-modal">
+                                popovertarget="add-experience-modal">
                             <span aria-hidden="true">+</span>
                             Tambah Experience
                         </button>
@@ -96,6 +96,16 @@
         gridContainer.classList.toggle('hide', !showGrid);
     }
 
+    // Mengubah karakter khusus HTML menjadi entity agar ditampilkan sebagai teks
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#39;');
+    }
+    
     // Membuat elemen card project
     function buildExperienceCardElement(item) {
         const experience = item.fields;
@@ -105,12 +115,12 @@
         articleElement.className = 'experience-card';
 
         const imageHtml = experience.thumbnail
-            ? `<img src="${experience.thumbnail}" alt="Gambar ${experience.title}" class="experience-image">`
+            ? `<img src="${escapeHtml(experience.thumbnail)}" alt="Gambar ${experience.title}" class="experience-image">`
             : '';
 
         const categoryHtml = `
             <span class="experience-category">
-                 ${experience.category}
+                 ${escapeHtml(experience.category)}
             </span>
             `;
 
@@ -136,19 +146,19 @@
         const isStarredClass = experience.is_starred ? " is-starred" : "";
         const starText = experience.is_starred ? "Unstar" : "Star";
         const starTitle = experience.star_count > 0 
-            ? `Dibintangi oleh ${experience.starred_by_names}` 
+            ? `Dibintangi oleh ${escapeHtml(experience.starred_by_names)}` 
             : "Jadilah yang pertama memberi star";
 
         // Komponen card
         const completeCardHtml = `
             ${imageHtml}
 
-            <span class="experience-category">${experience.category}</span>
+            ${categoryHtml}
 
-            <h2>${experience.title}</h2>
+            <h2>${escapeHtml(experience.title)}</h2>
             
             <div class="experience-content">
-                <p class="experience-description">${experience.description}</p>
+                <p class="experience-description">${escapeHtml(experience.description)}</p>
             
             </div>
 
@@ -264,7 +274,7 @@
             const response = await fetch(CREATE_EXPERIENCE_ENDPOINT, {
                 method: 'POST',
                 headers: { 'X-CSRFToken': getCookie('csrftoken') },
-                body: new FormData(projectForm),
+                body: new FormData(experienceForm),
             });
             const result = await response.json().catch(() => ({}));
 

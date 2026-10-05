@@ -136,6 +136,9 @@ def get_experiences_json(request):
 
     for experience in experiences:
         starred_users = experience.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
+        is_ongoing = experience.is_ongoing
 
         data.append({
             "pk": str(experience.id),
@@ -146,12 +149,10 @@ def get_experiences_json(request):
                 "thumbnail": experience.thumbnail,
                 "started_at": experience.started_at,
                 "ended_at": experience.ended_at,
+                "is_ongoing": is_ongoing,
                 "star_count": starred_users.count(),
-                "is_starred": (
-                    request.user in starred_users
-                    if request.user.is_authenticated
-                    else False
-                ),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
             }
         })
 
