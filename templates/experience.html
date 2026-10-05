@@ -24,17 +24,6 @@
                     Test Toast Notifikasi
                 </button>
 
-                <!-- Blok Notifikasi Pesan -->
-                {% if messages %}
-                    <div class="container" style="margin-top: 1rem;">
-                        {% for message in messages %}
-                            <div class="alert-message {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}" style="text-align: center;">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
                 <!-- Form Pencarian -->
                 <form id="experience-search-form" class="project-search">
                     <input type="search"
@@ -106,16 +95,16 @@
             .replaceAll("'", '&#39;');
     }
     
-    // Membuat elemen card project
+    // Membuat elemen card experience
     function buildExperienceCardElement(item) {
         const experience = item.fields;
         const experienceId = item.pk;
 
         const articleElement = document.createElement('article');
-        articleElement.className = 'experience-card';
+        articleElement.className = `experience-card category-${experience.category}`;
 
         const imageHtml = experience.thumbnail
-            ? `<img src="${escapeHtml(experience.thumbnail)}" alt="Gambar ${experience.title}" class="experience-image">`
+            ? `<img src="${escapeHtml(experience.thumbnail)}" alt="Gambar ${escapeHtml(experience.title)}" class="experience-image">`
             : '';
 
         const categoryHtml = `
@@ -191,7 +180,7 @@
         document.getElementById("add-experience-modal").hidePopover();
     }
 
-    // Fetch data project
+    // Fetch data experience
     async function fetchExperiences(searchQuery = "") {
         if (experiencesAbortController) experiencesAbortController.abort();
         experiencesAbortController = new AbortController();

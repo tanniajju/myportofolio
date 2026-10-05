@@ -171,16 +171,6 @@ def delete_experience(request, experience_id):
             
     return redirect("main:show_experience")
 
-def show_projects(request):
-    title_query = request.GET.get("title", "").strip()
-
-    context = {
-        "name": "Tania Ju",
-        "title_query": title_query,
-        "form": ProjectForm(),
-    }
-    return render(request, "project.html", context)
-
 @login_required(login_url="/login/")
 def create_project(request):
     if not request.user.is_superuser:
@@ -223,6 +213,7 @@ def show_project(request):
     context = {
         "name": "Tania Ju",
         "title_query": title_query,
+        "form": ProjectForm(),
     }
     return render(request, "project.html", context)
 

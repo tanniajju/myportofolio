@@ -24,17 +24,6 @@
                     Test Toast Notifikasi
                 </button>
 
-                <!-- Blok Notifikasi Pesan -->
-                {% if messages %}
-                    <div style="margin-bottom: 2rem;">
-                        {% for message in messages %}
-                            <div class="alert-message {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}" style="text-align: center;">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
                 <!-- Form Pencarian -->
                 <form id="project-search-form" class="project-search">
                     <input type="search"
