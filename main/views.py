@@ -12,8 +12,6 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 import datetime
 
-PASSWORD = "tambahinaja"
-
 def register(request):
     form = UserCreationForm(request.POST or None)
 
@@ -70,21 +68,17 @@ def create_experience(request):
         raise PermissionDenied
     
     form = ExperienceForm(request.POST or None)
-    if request.method == "POST":
-        input_kode = request.POST.get('secret_code')
-        
-        if input_kode == PASSWORD:
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Experience berhasil ditambahkan!")
-                return redirect("main:show_experience")
-        else:
-            messages.error(request, "Kode rahasia salah! Gagal menambahkan data.")
-            
+
+    if (request.method == "POST" and form.is_valid()):
+        form.save()
+        messages.success(request, "Experience berhasil ditambahkan!")
+        return redirect("main:show_experience")
+    
     context = {
         "name": "Tania Ju",
         "form": form,
         }
+    
     return render(request, "experience_form.html", context)
 
 @permission_required('main.change_project', raise_exception=True)
@@ -92,16 +86,10 @@ def update_experience(request, experience_id):
     experience = get_object_or_404(Experience, pk=experience_id)
     form = ExperienceForm(request.POST or None, instance=experience)
 
-    if request.method == "POST":
-        input_kode = request.POST.get('secret_code')
-
-        if input_kode == PASSWORD:
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Experience berhasil diperbarui!")
-                return redirect("main:show_experience")
-        else:
-            messages.error(request, "Kode rahasia salah! Gagal memperbarui data.")
+    if (request.method == "POST" and form.is_valid()):
+        form.save()
+        messages.success(request, "Experience berhasil diperbarui!")
+        return redirect("main:show_experience")
 
     context = {
         "name": "Tania Ju",
@@ -141,14 +129,8 @@ def delete_experience(request, experience_id):
     
     experience = get_object_or_404(Experience, pk=experience_id)
     if request.method == "POST":
-        # Ambil input kode rahasia dari modal HTML
-        input_kode = request.POST.get('secret_code')
-        
-        if input_kode == PASSWORD:
-            experience.delete()
-            messages.success(request, "Experience berhasil dihapus!")
-        else:
-            messages.error(request, "Kode rahasia salah! Gagal menghapus data.")
+        experience.delete()
+        messages.success(request, "Experience berhasil dihapus!")
             
     return redirect("main:show_experience")
 
@@ -159,7 +141,7 @@ def create_project(request):
     
     form = ProjectForm(request.POST or None)
 
-    if request.method == "POST" and form.is_valid():
+    if (request.method == "POST" and form.is_valid()):
         form.save()
         messages.success(request, "Proyek baru berhasil ditambahkan!")
         return redirect("main:show_project")
@@ -175,15 +157,10 @@ def update_project(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     form = ProjectForm(request.POST or None, instance=project)
 
-    if request.method == "POST" and form.is_valid():
-        input_kode = request.POST.get('secret_code')
-
-        if input_kode == PASSWORD:
-            form.save()
-            messages.success(request, "Project berhasil diperbarui!")
-            return redirect("main:show_project")
-        else:
-            messages.error(request, "Kode rahasia salah! Gagal memperbarui data.")
+    if (request.method == "POST" and form.is_valid()):
+        form.save()
+        messages.success(request, "Project berhasil diperbarui!")
+        return redirect("main:show_project")
 
     context = {
         ""
@@ -266,18 +243,15 @@ def create_skill(request):
         raise PermissionDenied
     
     form = SkillForm(request.POST or None)
-    if request.method == "POST":
-        input_kode = request.POST.get('secret_code')
-        
-        if input_kode == PASSWORD:
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Skill baru berhasil ditambahkan!")
-                return redirect("main:show_skill")
-        else:
-            messages.error(request, "Password salah! Gagal menambahkan skill.")
+    if (request.method == "POST" and form.is_valid()):
+        form.save()
+        messages.success(request, "Skill baru berhasil ditambahkan!")
+        return redirect("main:show_skill")
             
-    context = {"form": form}
+    context = {
+        "name": "Tania Ju",
+        "form": form
+        }
     return render(request, "skill_form.html", context)
 
 @permission_required('main.change_project', raise_exception=True)
@@ -285,16 +259,10 @@ def update_skill(request, skill_id):
     skill = get_object_or_404(Skill, pk=skill_id)
     form = SkillForm(request.POST or None, instance=skill)
 
-    if request.method == "POST":
-        input_kode = request.POST.get('secret_code')
-
-        if input_kode == PASSWORD:
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Skill berhasil diperbarui!")
-                return redirect("main:show_skill")
-        else:
-            messages.error(request, "Kode rahasia salah! Gagal memperbarui skill.")
+    if (request.method == "POST" and form.is_valid()):
+        form.save()
+        messages.success(request, "Skill berhasil diperbarui!")
+        return redirect("main:show_skill")
 
     context = {
         "name": "Tania Ju",
@@ -314,6 +282,7 @@ def show_skill(request):
     
     name_query = request.GET.get("name", "").strip()
     skill_list = Skill.objects.all()
+
     if name_query:
         skill_list = skill_list.filter(name__icontains=name_query)
     skill_list = skill_list.order_by("category", "name") 
@@ -342,13 +311,8 @@ def delete_skill(request, skill_id):
     
     skill = get_object_or_404(Skill, pk=skill_id)
     if request.method == "POST":
-        input_kode = request.POST.get('secret_code')
-        
-        if input_kode == PASSWORD:
-            skill.delete()
-            messages.success(request, "Skill berhasil dihapus!")
-        else:
-            messages.error(request, "Password salah! Gagal menghapus skill.")
+        skill.delete()
+        messages.success(request, "Skill berhasil dihapus!")
             
     return redirect("main:show_skill")
 
