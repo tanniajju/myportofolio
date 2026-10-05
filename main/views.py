@@ -81,6 +81,24 @@ def create_experience(request):
     
     return render(request, "experience_form.html", context)
 
+@require_POST
+def create_experience_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan experience."},
+            status=403,
+        )
+
+    form = ExperienceForm(request.POST)
+    if form.is_valid():
+        experience = form.save()
+        return JsonResponse(
+            {"message": "Experience berhasil ditambahkan.", "pk": str(experience.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
+
 @permission_required('main.update_experience', raise_exception=True)
 def update_experience(request, experience_id):
     experience = get_object_or_404(Experience, pk=experience_id)
@@ -99,28 +117,45 @@ def update_experience(request, experience_id):
     return render(request, "experience_form.html", context)
 
 def show_experience(request):
-    json_response = get_experiences_json(request)
-    experiences = serializers.deserialize("json", json_response.content.decode("utf-8"))
-    experiences = [exp.object for exp in experiences]
-    
     title_query = request.GET.get("title", "").strip()
-
+    
     context = {
         "name": "Tania Ju",
-        "experience_list": experiences,
         "title_query": title_query,
     }
     return render(request, "experience.html", context)
 
 def get_experiences_json(request):
     title_query = request.GET.get("title", "").strip()
-    experiences = Experience.objects.all()
+    experiences = Experience.objects.prefetch_related("starred_by").all()
 
     if title_query:
         experiences = experiences.filter(title__icontains=title_query)
 
-    experiences_json = serializers.serialize("json", experiences, use_natural_foreign_keys=True)
-    return HttpResponse(experiences_json, content_type="application/json")
+    data = []
+
+    for experience in experiences:
+        starred_users = experience.starred_by.all()
+
+        data.append({
+            "pk": str(experience.id),
+            "fields": {
+                "title": experience.title,
+                "description": experience.description,
+                "category": experience.category,
+                "thumbnail": experience.thumbnail,
+                "started_at": experience.started_at,
+                "ended_at": experience.ended_at,
+                "star_count": starred_users.count(),
+                "is_starred": (
+                    request.user in starred_users
+                    if request.user.is_authenticated
+                    else False
+                ),
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 @login_required(login_url="/login/")
 def delete_experience(request, experience_id):
@@ -182,6 +217,9 @@ def show_project(request):
 def get_projects_json(request):
     title_query = request.GET.get("title", "").strip()
     projects = Project.objects.prefetch_related('starred_by').all()
+
+    if title_query:
+        projects = projects.filter(title__icontains=title_query)
 
     data = []
     for project in projects:
@@ -253,6 +291,24 @@ def create_skill(request):
         "form": form
         }
     return render(request, "skill_form.html", context)
+
+@require_POST
+def create_skill_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan skill."},
+            status=403,
+        )
+
+    form = SkillForm(request.POST)
+    if form.is_valid():
+        skill = form.save()
+        return JsonResponse(
+            {"message": "Skill berhasil ditambahkan.", "pk": str(skill.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
 @permission_required('main.change_skill', raise_exception=True)
 def update_skill(request, skill_id):
