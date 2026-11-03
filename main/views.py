@@ -99,7 +99,7 @@ def create_experience_ajax(request):
 
     return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
-@permission_required('main.update_experience', raise_exception=True)
+@permission_required('main.change_experience', raise_exception=True)
 def update_experience(request, experience_id):
     experience = get_object_or_404(Experience, pk=experience_id)
     form = ExperienceForm(request.POST or None, instance=experience)
@@ -432,10 +432,10 @@ def contact_add(request):
             email=request.POST.get("email"),
         )
 
+    contacts = Contact.objects.all()
     context = {
         "contacts": contacts
     }
-    contacts = Contact.objects.all()
     return render(request, "_contact_rows.html", context)
 
 @require_http_methods(["DELETE"])
