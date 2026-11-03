@@ -38,26 +38,34 @@ class MainTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "experience.html")
-        self.assertContains(response, self.experience.title)
-        self.assertContains(response, self.experience.description)
-        self.assertContains(response, "Part-Time")
-        self.assertContains(response, "Sedang berlangsung")
         self.assertContains(response, f'href="{reverse("main:show_main")}"')
+
+    def test_experience_json(self):
+        response = self.client.get(reverse("main:get_experiences_json"))
+        self.assertEqual(response.status_code, 200)
+        fields = response.json()[0]["fields"]
+        self.assertEqual(fields["title"], self.experience.title)
+        self.assertEqual(fields["description"], self.experience.description)
+        self.assertTrue(fields["is_ongoing"])
+
+    def test_empty_experience_json(self):
+        Experience.objects.all().delete()
+        response = self.client.get(reverse("main:get_experiences_json"))
+        self.assertEqual(response.json(), [])
 
     def test_empty_experience_page(self):
         Experience.objects.all().delete()
         response = self.client.get(reverse("main:show_experience"))
 
-        self.assertContains(response, "Belum ada experience yang ditambahkan.")
+        self.assertContains(response, "Belum ada experience yang ditambahkan atau ditemukan.")
 
     def test_completed_experience(self):
         self.experience.ended_at = timezone.now().date() - timedelta(days=1)
         self.experience.save()
-        response = self.client.get(reverse("main:show_experience"))
+        response = self.client.get(reverse("main:get_experiences_json"))
 
         self.assertFalse(self.experience.is_ongoing)
-        self.assertContains(response, "Selesai")
-        self.assertNotContains(response, "Sedang berlangsung")
+        self.assertFalse(response.json()[0]["fields"]["is_ongoing"])
 
 
 class SkillTest(TestCase):
