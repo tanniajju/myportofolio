@@ -63,9 +63,10 @@ Buka peramban dan akses alamat http://localhost:8000/.
 | **5** | 21 - 15 Sep 2026 | Penyusunan section *Skill, Experience, Project* dengan implementasi *Form & Data Delivery* | - |
 | **6** | 28 Sep - 02 Okt 2026 | Penerapan Autentikasi, Session, dan Cookie | - |
 | **7** | 05 Okt 2026 | Penerapan Web Interactivity with JavaScript | Terdapat 2 section yang dapat dikerjakan pada tugas 3 & 4, untuk pengerjaan tugas 5, saya memilih implementasinya di Experience |
+| **8** | 02 - 09 Nov 2026 | Penerapan REST API dengan Django REST Framework pada section *Skill* dan *Experience* | - |
 ---
 
-# Tugas 1
+### Tugas 1
 **1. Penggunaan Elemen Semantik HTML5**
 
 Saya secara aktif menggunakan elemen semantik HTML5 seperti `<section>` untuk membungkus area *Experience* dan `<nav>` untuk bilah navigasi. Secara visual tidak ada perbedaan dengan menggunakan `<div>` biasa, hanya saja secara teknis, ini mempermudah *maintainability* kode saat proyek bertambah besar dan mengoptimalkan *Screen Reader* untuk aksesibilitas.Ini mempermudah mesin pencari (SEO) dapat mengindeks hierarki informasi portofolio saya dengan akurat.
@@ -87,7 +88,7 @@ Dalam pengerjaan proyek myportofolio (Tugas 1), sejauh ini saya memanfaatkan *Ge
 
 ---
 
-# Tugas 2
+### Tugas 2
 **1. Alur Permintaan pada Halaman Portofolio**
 * Pengguna mengakses URL halaman portofolio baru (misalnya `/skill`).
 * `urls.py` proyek: Permintaan HTTP dari *browser* pertama kali masuk ke berkas rute utama proyek. Berkas ini bertugas memeriksa awalan URL dan meneruskannya ke `urls.py` tingkat aplikasi menggunakan fungsi `include()`.
@@ -129,7 +130,7 @@ Dalam pengerjaan proyek myportofolio (Tugas 2), sejauh ini saya memanfaatkan *Ge
 2.  **Iterative Debugging:** AI membantu saya dalam melakukan debugging, dengan log error spesifik seperti kegagalan assertion pada test case, untuk memahami akar masalah dan memperbaiki dengan tepat.
 3. **Refaktorisasi Templating**: Saran penerapan {% %} untuk memecah kolom kategori secara dinamis dan menampilkan display kategori sebagai header tanpa hard-code HTML.
 
-# Tugas 3
+### Tugas 3
 **1. Alasan Menggunakan ModelForm dan *{% csrf_token %}***
 
 Karena `ModelForm` mempermudah pembuatan form Django yang terhubung langsung dengan model database model. Sehingga Django secara otomatis membaca tipe data dari field model dan melakukan validasi input pengguna tanpa perlu menulis logika validasi dari awal. Selain itu, form dapat langsung disimpan ke database menggunakan metode .save() tanpa perlu memetakan satu per satu atribut secara manual. Selain itu, `ModelForm` juga mengurangi risiko kesalahan (human error) dalam penulisan nama atribut input HTML, serta mencegah* mass assignment vulnerability* dengan membatasi field apa saja yang boleh diisi melalui *parameter fields* atau *exclude*.
@@ -173,7 +174,7 @@ Meskipun membantu, AI memiliki beberapa keterbatasan nyata yang ditemukan selama
 2. "Sepertinya logika pengecekan status selesai atau tidak masih salah deh, soalnya experience yg baru aku masukkan saja salah. Sepertinya karena ended_at tidak aku kosongin, sementara def is_ongoing(self): return self.ended_at is None. Tapi aku isi tanggal di masa depan, harusnya pengecekan logika mengcover hal ini, bagaimana mengecek untuk tipe data Datetime sekarang"
 3. "Bagaimana struktur HTML dan CSS menggunakan tata letak grid yang tampilannya responsif, rapi, dan kartu-kartunya memiliki tinggi yang seragam""
 
-# Tugas 4
+### Tugas 4
 Pada Tugas 4, diterapkan pola autentikasi dan otorisasi karena aplikasi portofolio memuat data yang merepresentasikan identitas dan karya pemiliknya, sehingga tidak boleh dapat diubah atau dihapus oleh sembarang orang. Autentikasi memastikan siapa yang sedang mengakses aplikasi, sedangkan otorisasi membatasi apa saja yang boleh dilakukan setelah identitas tersebut diketahui. Pembagian hak akses dilakukan berdasarkan peran dengan prinsip *least privilege*, yaitu setiap pengguna hanya memperoleh hak sesuai kebutuhannya. Dengan demikian, pemilik tetap memegang kendali penuh atas portofolionya, tetapi pengelolaan data menjadi lebih fleksibel dan aman.
 
 ### Ringkasan hak akses per peran
@@ -198,7 +199,7 @@ Dalam pengerjaan proyek myportofolio (Tugas 4), sejauh ini saya memanfaatkan *Ge
 2. Bagaimana menerapkan fitur star pada section skill dengan tidak merusak struktur grouping dan filter untuk pencarian dan penampilan header berdasarkan kategori?
 3. Berdasarkan *pasted penjelasan peran di perintah tugas*, buat struktur table untuk readme yang sederhana dan mudah dibaca.
 
-# Tugas 5
+### Tugas 5
 **1. Apa itu debouncing dan mengapa penting diterapkan pada fitur pencarian AJAX**
 
 Debouncing adalah teknik untuk menunda eksekusi suatu fungsi sampai pengguna berhenti melakukan suatu aktivitas selama waktu tertentu. Pada fitur pencarian, debouncing digunakan agar request AJAX tidak dikirim setiap kali pengguna mengetik satu karakter.
@@ -259,3 +260,28 @@ Dalam pengerjaan proyek `myportofolio` (Tugas 5), saya menggunakan **Generative 
 1. *Pasted requirement tugas*, bantu tentukan tahapan pengerjaan yang paling efektif dan efisien.
 2. *Pasted kode dan error*, kenapa terjadi error ini dan apa perbaikan yang paling sesuai dengan struktur proyek?
 3. Berdasarkan checklist tugas, bantu cek apakah implementasi AJAX, debouncing, modal, CSRF, toast, dan XSS sudah terpenuhi.
+
+### Tugas 6
+
+1. **REST, PUT, dan PATCH.** REST (*Representational State Transfer*) adalah gaya arsitektur untuk API yang memperlakukan data sebagai *resource* dengan alamat sendiri dan dapat dimanipulasi lewat method HTTP standar, bersifat *stateless*, dan memakai status code yang bermakna. Mengembalikan JSON saja belum cukup, endpoint seperti `/getSkills` atau `/deleteSkill` yang semuanya memakai POST dan selalu membalas 200 tetap berformat JSON, tetapi bukan RESTful. API ini RESTful karena alamatnya berorientasi resource, method-nya bermakna (GET baca, POST buat, PUT/PATCH ubah, DELETE hapus), dan status code-nya tepat. PUT mengganti seluruh resource sehingga semua field wajib dikirim, sedangkan PATCH hanya mengubah field yang dikirim. Sebagai contoh, PATCH cocok saat Editor hanya mengubah `nilai` sebuah skill dari 80 ke 85, sedangkan PUT cocok untuk mengganti seluruh data skill sekaligus. Modal edit di proyek ini memakai PATCH.
+
+2. **Peran serializer.** Serializer menerjemahkan dua arah, objek model menjadi JSON dan JSON dari klien menjadi data tervalidasi sebelum disimpan. Validasinya mencakup aturan dari model (`nilai` 1-100, URL valid), pembersihan `strip_tags` lewat `validate_<field>`, dan aturan lintas field (`ended_at` tidak boleh sebelum `started_at`). Dibanding merakit dictionary manual dengan `JsonResponse` seperti di Tutorial 05, serializer membuat bentuk data konsisten di `_list_response`, `detail_response`, dan `_toggle_star_response`, validasi dan sanitasi ada di satu tempat, error 400 terstruktur per field, field dibatasi eksplisit sehingga keamanan data tidak bocor, dan field turunan bersifat read-only sehingga tidak bisa dimanipulasi klien.
+
+3. **Autentikasi vs otorisasi.** Autentikasi menjawab "siapa kamu", (`SessionAuthentication` membaca cookie sesi lalu mengisi `request.user`). Otorisasi menjawab "apa yang boleh kamu lakukan" (permission class memeriksa peran, misalnya Editor hanya boleh PUT/PATCH). Hak akses harus diperiksa di server karena menyembunyikan tombol hanya mengatur tampilan; siapa pun bisa mengirim request langsung lewat DevTools, curl, atau Browsable API. Test di proyek ini membuktikan permintaan itu ditolak dengan 403 dan data tetap ada.
+
+4. **CSRF pada SessionAuthentication.** Browser mengirim cookie sesi secara otomatis ke domain yang sama, termasuk saat request dipicu dari situs lain. Karena itu penyerang bisa membuat browser korban yang sedang login mengubah data tanpa sepengetahuannya. Django REST Framework mewajibkan token CSRF (header `X-CSRFToken`) untuk request tidak aman yang diautentikasi lewat sesi, sehingga request tanpa token ditolak dengan 403. `force_authenticate` tidak cukup sebagai bukti karena ia melewati proses autentikasi dan sesi sama sekali, sehingga pemeriksaan CSRF tidak pernah dijalankan; test itu tetap lulus walaupun perlindungan CSRF rusak. Maka dipakai `APIClient(enforce_csrf_checks=True)` dengan `.login()` untuk menguji bahwa request tanpa token memang ditolak.
+
+**AI Disclosure & Manual Refinement**
+
+Dalam pengerjaan Tugas 6 (penerapan DRF pada section Skill dan Experience),  saya menggunakan Claude sebagai pendiskusi teknis untuk memahami requirement, menentukan tahapan pengerjaan yang efektif, serta membantu debugging. Keputusan akhir dan penyesuaian kode tetap saya lakukan secara manual:
+
+1. **Bagian yang dibantu AI:** permission class, helper pada `api_views.py`, pola modal tambah/edit, dan rancangan test per peran.
+2. **Strategi prompting:** saya meminta AI mencoba mengerjakan sendiri secara bertahap per langkah, kemudian membaca dan meminta penjelasan alasan di balik tiap keputusan sebagai bahan diskusi, lalu menulis code akhir dan traceback saya untuk diperiksa.
+3. **Manual Refinement:** saya menyederhanakan permission dengan menghapus subclass per model dan pemeriksaan Django permission, karena Editor di proyek saya selalu dikenali lewat grup; menjadikan `started_at` wajib di API agar konsisten dengan form dan menghapus fallback yang tidak perlu, menerapkan helper bersama juga pada view..
+4. **Keterbatasan AI yang saya temui:** rancangan awal AI lebih rumit dari yang dibutuhkan sehingga perlu saya pertanyakan dan sederhanakan, perubahan tanda tangan `is_editor` membuat pemanggilan lama menjadi `TypeError` yang baru ketahuan saat saya menjalankan halaman, dan AI tidak bisa mengetahui isi database saya (misalnya izin grup Editor), sehingga hal itu saya periksa langsung di admin.
+
+**Lampiran prompt:**
+1. *Pasted kode permissions.py*, kenapa perlu konstanta dan kenapa `is_editor` berupa fungsi, bukan class?
+2. *Pasted kode serializers.py*, apa peran `attrs` di sini dan bagaimana mengubah `ProjectSerializer`?
+3. *Pasted traceback* 6 test gagal, di mana letak kesalahannya?
+4. Tolong bantu buatkan test API per peran dan evaluasi test lama (pasted tests.py).
