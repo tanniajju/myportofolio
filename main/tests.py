@@ -80,8 +80,11 @@ class SkillTest(TestCase):
         response = self.client.get(reverse("main:show_skill"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "skill.html")
-        self.assertContains(response, self.skill.name)
         self.assertContains(response, f'href="{reverse("main:show_main")}"')
+        # The list is loaded through the API, so the page only points to it.
+        self.assertContains(response, reverse("api:skill-list"))
+        api_response = self.client.get(reverse("api:skill-list"))
+        self.assertEqual(api_response.json()[0]["name"], self.skill.name)
 
     def test_nonexistent_page_returns_404(self):
         response = self.client.get("/halaman-yang-tidak-ada/")
@@ -98,9 +101,9 @@ class SkillTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "skill.html")
-        self.assertContains(response, self.skill.name)
-        self.assertContains(response, self.skill.description)
-        self.assertContains(response, "CSS")
+        item = self.client.get(reverse("api:skill-list")).json()[0]
+        self.assertEqual(item["name"], "CSS")
+        self.assertEqual(item["description"], self.skill.description)
         self.assertContains(response, f'href="{reverse("main:show_main")}"')
 
     def test_empty_skill_page(self):
