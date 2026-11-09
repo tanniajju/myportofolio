@@ -1,0 +1,27 @@
+<div id="skill-modal" class="project-form-modal" popover="auto" role="dialog"
+     aria-modal="true" aria-labelledby="skill-modal-title">
+    <button type="button" class="project-form-modal__backdrop"
+            popovertarget="skill-modal" popovertargetaction="hide"
+            aria-label="Tutup form skill"></button>
+
+    <div class="project-form-modal__content">
+        <button type="button" class="project-form-modal__close"
+                popovertarget="skill-modal" popovertargetaction="hide"
+                aria-label="Tutup form skill">×</button>
+
+        <h2 id="skill-modal-title">Tambah Skill Baru</h2>
+        <form id="skill-form" class="project-form">
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <div class="project-form-modal__actions">
+                <button type="button" class="button button-secondary"
+                        popovertarget="skill-modal" popovertargetaction="hide">Batal</button>
+                <button type="submit" id="skill-submit" class="button">Tambah Skill</button>
+            </div>
+        </form>
+    </div>
+</div>

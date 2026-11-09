@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from main.models import Experience, Skill, Project, Contact
 from main.forms import ExperienceForm, SkillForm, ProjectForm
+from main.permissions import is_editor
 from django.http import JsonResponse, HttpResponse, QueryDict
 from django.views.decorators.http import require_POST, require_http_methods
 import datetime
@@ -123,6 +124,7 @@ def show_experience(request):
         "name": "Tania Ju",
         "title_query": title_query,
         "form": ExperienceForm(),
+        "can_edit": is_editor(request.user),
     }
     return render(request, "experience.html", context)
 
@@ -331,25 +333,11 @@ def update_skill(request, skill_id):
     return render(request, "skill_form.html", context)
 
 def show_skill(request):
-    json_response = get_skills_json(request)
-
-    skills = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    skills = [skill.object for skill in skills]
-    
-    name_query = request.GET.get("name", "").strip()
-    skill_list = Skill.objects.all()
-
-    if name_query:
-        skill_list = skill_list.filter(name__icontains=name_query)
-    skill_list = skill_list.order_by("category", "name") 
-
     context = {
         "name": "Tania Ju",
-        "skill_list": skill_list,
-        "name_query": name_query,
+        "name_query": request.GET.get("name", "").strip(),
+        "form": SkillForm(),
+        "can_edit": is_editor(request.user),
     }
     return render(request, "skill.html", context)
 
